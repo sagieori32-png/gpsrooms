@@ -197,6 +197,7 @@ figure.door figcaption{font-size:.8rem;color:var(--muted)}
           <div class="st-head"><span id="stFrom"></span><span id="stCount" style="font-variant-numeric:tabular-nums"></span></div>
           <div class="st-bar" aria-hidden="true"><i id="stBar"></i></div>
           <img class="st-img" id="stImg" alt="">
+          <div class="photo st-img" id="stNoImg" hidden data-t="noPhoto"></div>
           <p class="st-text" id="stText" aria-live="polite"></p>
           <div class="row">
             <button class="btn btn-ghost" id="stPrev" type="button" data-t="prev"></button>
@@ -285,6 +286,7 @@ const UI = {
   pOpH:     T("מי מפעיל את האפליקציה", "من يشغّل التطبيق", "Who runs the app"),
   pOp:      T("[שם המפעיל ודרך יצירת קשר — להשלמה]. האפליקציה היא כלי עזר לא רשמי. היא אינה שירות של האוניברסיטה העברית או של בית הספר לעבודה סוציאלית ולרווחה חברתית, ואינה מייצגת אותם. לעזרה אפשר תמיד לפנות למזכירות בית הספר.", "[اسم الجهة المشغّلة ووسيلة التواصل — للإكمال]. التطبيق أداة مساعدة غير رسمية. ليس خدمة للجامعة العبرية أو لمدرسة العمل الاجتماعي والرفاه الاجتماعي، ولا يمثّلهما. للمساعدة يمكن دائمًا التوجه إلى سكرتارية المدرسة.", "[Operator name and contact — to be completed]. The app is an unofficial helper tool. It is not a service of, and does not represent, the Hebrew University or the School of Social Work and Social Welfare. For help, you can always contact the school office."),
   pBack:    T("חזרה", "رجوع", "Back"),
+  noPhoto:  T("תמונה לצעד הזה תתווסף בקרוב", "ستُضاف صورة لهذه الخطوة قريبًا", "A photo for this step is coming soon"),
   rateQ:    T("המסלול עזר לך?", "هل ساعدك المسار؟", "Did this route help you?"),
   rateUp:   T("אהבתי", "أعجبني", "Liked it"),
   rateDown: T("לא אהבתי", "لم يعجبني", "Didn't like it"),
@@ -330,9 +332,9 @@ const DATA = {
     {plate:"420", floor:"4", area:"sw"},
     {plate:"422", floor:"4", area:"sw", label:T("חדר ישיבות קטן","غرفة اجتماعات صغيرة","Small meeting room"), alias:"ישיבות meeting اجتماعات"},
     {plate:"428", floor:"4", area:"sw"}, {plate:"520", floor:"5", area:"sw"}, {plate:"528", floor:"5", area:"sw"},
-    {plate:"600", floor:"6", area:"sw"}, {plate:"602", floor:"6", area:"sw"}, {plate:"603", floor:"6", area:"sw"},
+    {plate:"600", floor:"6", area:"sw"}, {plate:"602", floor:"6", area:"sw"}, {plate:"603", floor:"6", photo:"img/b52/d603.jpg", area:"sw"},
     {plate:"399", bldg:"52", photo:"img/399.jpg", area:"lib", label:T("ספריית עו״ס וחינוך","مكتبة العمل الاجتماعي والتربية","Social Work & Education Library"), alias:"ספרייה ספריה library مكتبة",
-      tip:T("עד 16:00 נכנסים דרך הספרייה. משעה 16:00 הכניסה והיציאה דרך הדלת הזו.","حتى الساعة 16:00 يتم الدخول عبر المكتبة. من الساعة 16:00 الدخول والخروج من هذا الباب.","Until 16:00, enter through the library. From 16:00, enter and exit through this door.")},
+      tip:T("בגלל השיפוץ אין כרגע כניסה דרך הספרייה. נכנסים מהדלת החיצונית, כמו בתמונות.","بسبب أعمال الترميم لا يوجد حاليًا دخول عبر المكتبة. ادخلوا من الباب الخارجي، كما في الصور.","Because of renovations, there is currently no entry through the library. Use the outside door, as shown in the photos.")},
     {plate:"24-301", floor:"3", area:"soc4"}, {plate:"24-302", floor:"3", area:"soc4"},
     {plate:"42505", floor:"5", area:"hum42"}, {plate:"42506", floor:"5", area:"hum42"},
     {plate:"200", bldg:"67", floor:"2", photo:"img/buber/8_d200.jpg", area:"buber", label:T("בובר 200","بوبر 200","Buber 200")}
@@ -368,7 +370,7 @@ const STEP = {
     "מחפשים את הפתח עם השלט \"מתחם אוסטרליה · 53 · 281–284 · קומה 2\" ונכנסים לחדר המדרגות.",
     "ابحثوا عن المدخل الذي عليه لافتة \"مجمّع أستراليا · 53 · 281–284 · طابق 2\" وادخلوا إلى بيت الدرج.",
     "Look for the opening with the sign \"Australian Complex · 53 · 281–284 · Floor 2\" and enter the stairwell."),
-  stairs: S("img/r283/5.jpg", "יורדים במדרגות קומה אחת.", "انزلوا طابقًا واحدًا بالدرج.", "Go down one floor by the stairs."),
+  stairs: S("img/r283/5.jpg", "יורדים במדרגות עד הסוף. לא יוצאים בקומת הביניים, שבה נמצאים החדרים של ריפוי בעיסוק.", "انزلوا الدرج حتى النهاية. لا تخرجوا في الطابق الأوسط حيث غرف العلاج الوظيفي.", "Go all the way down the stairs. Do not get off at the middle floor, where the Occupational Therapy rooms are."),
   junction: S("img/rt/junction.jpg",
     "מגיעים לרחבה שבה הפתח של מתחם אוסטרליה (מימין). לא נכנסים אליו: פונים למסדרון משמאל, לפי השלט \"הספרייה לחינוך ולעבודה סוציאלית · מכון חרוב\".",
     "تصلون إلى ساحة فيها مدخل مجمّع أستراليا (على اليمين). لا تدخلوا إليه: انعطفوا إلى الممر على اليسار، حسب لافتة \"مكتبة التربية والعمل الاجتماعي · معهد حاروف\".",
@@ -387,18 +389,18 @@ const STEP = {
     "من المدخل الرئيسي للمدرسة انزلوا طابقًا واحدًا بالدرج.",
     "From the school's main entrance, go down one floor by the stairs."),
   corr220: S("img/b52/corr220.jpg",
-    "בתחתית המדרגות פונים ימינה וממשיכים במסדרון עם תמונות הנוף על הקירות.",
-    "في أسفل الدرج انعطفوا يمينًا واستمروا في الممر الذي على جدرانه صور مناظر طبيعية.",
-    "At the bottom of the stairs, turn right and continue along the corridor with landscape pictures on the walls."),
+    "בתחתית המדרגות פונים שמאלה וממשיכים במסדרון עם תמונות הנוף על הקירות.",
+    "في أسفل الدرج انعطفوا يسارًا واستمروا في الممر الذي على جدرانه صور مناظر طبيعية.",
+    "At the bottom of the stairs, turn left and continue along the corridor with landscape pictures on the walls."),
   lifts: S("img/b52/lifts.jpg",
     "מגיעים למעליות של בניינים 52–53 בקומה 3. השלט משמאל מפרט את חדרי בית הספר לעבודה סוציאלית לפי קומה.",
     "تصلون إلى مصاعد المبنيين 52–53 في الطابق 3. اللافتة على اليسار تعرض غرف مدرسة العمل الاجتماعي حسب الطابق.",
     "Reach the Building 52–53 elevators on Floor 3. The sign on the left lists the School of Social Work rooms by floor."),
   panel: f => S("img/b52/panel.jpg", `נכנסים למעלית ולוחצים על קומה ${f}.`, `ادخلوا المصعد واضغطوا على الطابق ${f}.`, `Get in the elevator and press ${f}.`),
-  f4: S("img/b52/f4door.jpg",
-    "בקומה 4 נכנסים בדלת הזכוכית של בית הספר לעבודה סוציאלית (השלט הכחול \"קומה 4\" מימין).",
-    "في الطابق 4 ادخلوا من الباب الزجاجي لمدرسة العمل الاجتماعي (اللافتة الزرقاء \"طابق 4\" على اليمين).",
-    "On Floor 4, go through the glass door of the School of Social Work (blue \"Floor 4\" sign on the right)."),
+  f4: S(null,
+    "בקומה 4 יוצאים מהמעלית, פונים ימינה וממשיכים עד סוף המסדרון.",
+    "في الطابق 4 اخرجوا من المصعد، انعطفوا يمينًا واستمروا حتى نهاية الممر.",
+    "On Floor 4, leave the elevator, turn right and continue to the end of the corridor."),
   f5: S("img/b52/sharp.jpg",
     "בקומה 5 נכנסים למסדרון \"אגף שארפ\" עם השלט \"חדרים 500–538\".",
     "في الطابق 5 ادخلوا ممر \"جناح شارب\" الذي عليه لافتة \"غرف 500–538\".",
@@ -424,7 +426,7 @@ const R24 = [
   S("img/b2/s24_2_entr2122.jpg", "נכנסים בפתח עם השלטים \"בית הספר למנהל עסקים 21\" ו\"הפקולטה למדעי החברה 22\".", "ادخلوا من المدخل الذي عليه لافتتا \"كلية إدارة الأعمال 21\" و\"كلية العلوم الاجتماعية 22\".", "Go through the opening with the signs \"Business School 21\" and \"Faculty of Social Sciences 22\"."),
   S("img/b2/s24_3_orange.jpg", "ממשיכים ישר לפי השלט \"22–27 ↑\".", "استمروا مباشرة حسب لافتة \"22–27 ↑\".", "Keep straight, following the \"22–27 ↑\" sign."),
   S("img/b2/s24_4_sign23.jpg", "בשלט \"23 / 24–27\" ממשיכים ישר לכיוון 24–27.", "عند لافتة \"23 / 24–27\" استمروا مباشرة باتجاه 24–27.", "At the \"23 / 24–27\" sign, keep straight toward 24–27."),
-  S("img/b2/s24_5_purple.jpg", "מחפשים את השלטים הסגולים של בניין 24 בקומה 3.", "ابحثوا عن اللافتات البنفسجية لمبنى 24 في الطابق 3.", "Look for the purple Building 24 signs on Floor 3."),
+  S("img/b2/s24_5_purple.jpg", "מחפשים בצד ימין את השלטים הסגולים של בניין 24 בקומה 3.", "ابحثوا على الجانب الأيمن عن اللافتات البنفسجية لمبنى 24 في الطابق 3.", "Look on the right for the purple Building 24 signs on Floor 3."),
   A("img/b2/s24_6_doors.jpg", "24-301 מימין, 24-302 משמאל.", "24-301 على اليمين، 24-302 على اليسار.", "24-301 is on the right, 24-302 on the left.")
 ];
 const R42 = [
@@ -441,7 +443,7 @@ const ROUTES = {
   "359": {from:FROM.sw, steps:[...common, STEP.junction, STEP.corr, A("img/rt/d359.jpg","הדלת הירוקה עם שלט \"יציאה\" מעליה היא חדר 359.","الباب الأخضر الذي فوقه لافتة \"خروج\" هو الغرفة 359.","The green door with the \"Exit\" sign above it is room 359.")]},
   "365": {from:FROM.sw, steps:[...common, STEP.junction, STEP.corr, STEP.tolib, A("img/rt/d365.jpg","אולם 365, אולם חרוב.","القاعة 365، قاعة حاروف.","Room 365, Haruv Hall.")]},
   "399": {from:FROM.sw, steps:[...common, STEP.aus399, A("img/399.jpg","חדר 399, ספריית עו״ס.","الغرفة 399، مكتبة العمل الاجتماعي.","Room 399, Social Work Library.")]},
-  "220": {from:FROM.sw, steps:[STEP.lobby, STEP.down, A("img/b52/d220.jpg","בתחתית המדרגות פונים שמאלה. הדלת האדומה, ליד ארון הכיבוי, היא כיתה 220.","في أسفل الدرج انعطفوا يسارًا. الباب الأحمر بجانب خزانة الإطفاء هو الغرفة 220.","At the bottom of the stairs, turn left. The red door next to the fire cabinet is room 220.")]},
+  "220": {from:FROM.sw, steps:[STEP.lobby, STEP.down, A("img/b52/d220.jpg","בתחתית המדרגות פונים ימינה. הדלת האדומה, ליד ארון הכיבוי, היא כיתה 220.","في أسفل الدرج انعطفوا يمينًا. الباب الأحمر بجانب خزانة الإطفاء هو الغرفة 220.","At the bottom of the stairs, turn right. The red door next to the fire cabinet is room 220.")]},
   "224": {from:FROM.sw, steps:[STEP.lobby, STEP.down, STEP.corr220, A("img/b52/d224.jpg","הדלת האדומה עם השלט 224, צמודה לחדר 223.","الباب الأحمر الذي عليه لافتة 224، بجانب الغرفة 223.","The red door with the 224 sign, next to room 223.")]},
   "420": {from:FROM.lifts, steps:viaLift(4, STEP.f4, A("img/b52/d420.jpg","חדר 420 משמאל (ליד הכיסאות הכחולים).","الغرفة 420 على اليسار (بجانب الكراسي الزرقاء).","Room 420 is on the left, by the blue chairs."))},
   "422": {from:FROM.lifts, steps:viaLift(4, STEP.f4, A("img/b52/d420.jpg","חדר הישיבות 422 מימין, ליד 420.","غرفة الاجتماعات 422 على اليمين، بجانب 420.","Meeting room 422 is on the right, next to 420."))},
@@ -632,11 +634,12 @@ function renderStepper(){
   $("stDraftExtra").hidden = !a11y || !!current.accOk;
   $("stCount").textContent = tr(UI.stepOf(stepIdx + 1, n));
   $("stBar").style.width = `${(stepIdx + 1) / n * 100}%`;
-  $("stImg").src = s.img; $("stImg").alt = tr(s.text);
+  $("stImg").hidden = !s.img; $("stNoImg").hidden = !!s.img;
+  if (s.img) { $("stImg").src = s.img; $("stImg").alt = tr(s.text); }
   $("stText").textContent = tr(s.text);
   $("stPrev").disabled = stepIdx === 0; $("stPrev").style.visibility = stepIdx === 0 ? "hidden" : "visible";
   $("stNext").textContent = tr(last ? UI.restart : UI.next);
-  if (!last) { const im = new Image(); im.src = st[stepIdx + 1].img; }
+  if (!last && st[stepIdx + 1].img) { const im = new Image(); im.src = st[stepIdx + 1].img; }
 }
 $("stPrev").onclick = () => { if (stepIdx > 0) { stepIdx--; renderStepper(); } };
 $("stNext").onclick = () => { const n = activeRoute(current).steps.length; stepIdx = stepIdx < n - 1 ? stepIdx + 1 : 0; renderStepper(); $("stepper").scrollIntoView({block:"start", behavior:"smooth"}); };
