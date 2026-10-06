@@ -26,6 +26,17 @@
 
 *{box-sizing:border-box}
 [hidden]{display:none!important}
+.a11y{display:flex;align-items:center;gap:10px;width:100%;border:2px solid var(--sign);background:var(--surface);color:var(--fg);border-radius:12px;padding:10px 14px;font:600 1rem var(--body);cursor:pointer;text-align:start}
+.a11y svg{width:26px;height:26px;flex:none}
+.a11y .sw{margin-inline-start:auto;width:42px;height:24px;border-radius:12px;background:var(--line);position:relative;flex:none}
+.a11y .sw::after{content:"";position:absolute;top:3px;inset-inline-start:3px;width:18px;height:18px;border-radius:50%;background:var(--surface);transition:inset-inline-start .15s}
+.a11y[aria-pressed="true"]{background:var(--sign);color:var(--sign-fg)}
+.a11y[aria-pressed="true"] .sw{background:var(--amber)}
+.a11y[aria-pressed="true"] .sw::after{inset-inline-start:21px;background:var(--amber-ink)}
+.a11y:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+.acc-on{border-inline-start:4px solid var(--sign);background:var(--surface);border-radius:8px;padding:8px 12px;font-size:.9rem}
+.badge-acc{font-weight:600;color:var(--ok)}
+.badge-noacc{color:var(--warn)}
 body{background:var(--bg);color:var(--fg);font:16px/1.6 var(--body)}
 .wrap:lang(ar){font-family:"IBM Plex Sans Arabic","Segoe UI",Arial,sans-serif}
 .wrap:lang(ar) h1,.wrap:lang(ar) h2,.wrap:lang(ar) h3{font-family:"IBM Plex Sans Arabic",Arial,sans-serif;font-weight:600}
@@ -96,6 +107,9 @@ li.arrive .dot{background:var(--sign);color:var(--sign-fg)}
 .stepbody{display:flex;flex-direction:column;gap:8px;min-width:0}
 .photo{aspect-ratio:4/3;max-width:100%;border-radius:8px;border:1px dashed var(--line);display:grid;place-items:center;color:var(--muted);font-size:.8rem;background:repeating-linear-gradient(135deg,transparent 0 10px,var(--bg) 10px 20px)}
 .foot{text-align:center}
+.disclaimer{border:1px solid var(--line);border-inline-start:4px solid var(--muted);background:var(--surface);border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:6px;font-size:.875rem;color:var(--muted)}
+.disclaimer h3{font-family:var(--body);font-weight:600;font-size:.9rem;color:var(--fg)}
+.disclaimer p:last-child{color:var(--fg);font-weight:500}
 .stepper{display:flex;flex-direction:column;gap:12px}
 .st-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:.85rem;color:var(--muted)}
 .st-bar{height:6px;border-radius:3px;background:var(--line);overflow:hidden}
@@ -132,6 +146,12 @@ figure.door figcaption{font-size:.8rem;color:var(--muted)}
   </header>
 
   <p class="note" data-t="note"></p>
+
+  <button type="button" class="a11y" id="a11y" aria-pressed="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="4" r="2" fill="currentColor"/><path d="M10 7v6h6l2 5"/><path d="M10 10h5"/><path d="M7.5 11.2A5 5 0 1 0 14 18"/></svg>
+    <span data-t="a11yBtn"></span><span class="sw" aria-hidden="true"></span>
+  </button>
+  <p class="acc-on" id="accOn" hidden data-t="a11yOn"></p>
 
   <section id="viewHome" hidden>
     <div style="display:flex;flex-direction:column;gap:12px">
@@ -170,6 +190,7 @@ figure.door figcaption{font-size:.8rem;color:var(--muted)}
             <button class="btn btn-primary" id="stNext" type="button"></button>
           </div>
           <p class="st-draft" data-t="draft"></p>
+          <p class="st-draft" id="stDraftExtra" hidden data-t="accCheck"></p>
         </div>
         <p class="loc" id="indoorPending" hidden data-t="pending"></p>
       </div>
@@ -186,7 +207,11 @@ figure.door figcaption{font-size:.8rem;color:var(--muted)}
     <button class="btn btn-primary" id="privBack" type="button" data-t="pBack"></button>
   </section>
 
-  <p class="foot muted small" data-t="foot"></p>
+  <aside class="disclaimer" aria-labelledby="discH">
+    <h3 id="discH" data-t="discH"></h3>
+    <p data-t="disc"></p>
+    <p data-t="discHelp"></p>
+  </aside>
 </div>
 
 <script>
@@ -200,7 +225,7 @@ const UI = {
   title:    T("מצפן עו״ס", "بوصلة العمل الاجتماعي", "SW Compass"),
   subtitle: T("הדרך לכיתות בית הספר לעבודה סוציאלית, הר הצופים", "الطريق إلى غرف مدرسة العمل الاجتماعي، جبل المشارف", "Finding School of Social Work classrooms on Mount Scopus"),
   privacy:  T("פרטיות", "الخصوصية", "Privacy"),
-  note:     T("גרסת עבודה. רשימת החדרים מעודכנת. מסלולי התמונות הם טיוטה ונבדקים בשטח.", "نسخة تجريبية. قائمة الغرف محدّثة. مسارات الصور مسودّة ويتم فحصها في الموقع.", "Working version. The room list is up to date. Photo routes are drafts still being checked on site."),
+  note:     T("כלי עזר לא רשמי, לא של האוניברסיטה. מסלולי התמונות הם טיוטה ונבדקים בשטח.", "أداة مساعدة غير رسمية، ليست تابعة للجامعة. مسارات الصور مسودّة ويتم فحصها في الموقع.", "Unofficial helper tool, not run by the university. Photo routes are drafts still being checked on site."),
   qLabel:   T("לאיזה חדר את/ה צריך/ה להגיע?", "إلى أي غرفة تريدون الوصول؟", "Which room do you need to get to?"),
   qPh:      T("מספר חדר, למשל 428 או חרוב", "رقم الغرفة، مثلاً 428", "Room number, e.g. 428 or Haruv"),
   filter:   T("סינון לפי בניין", "تصفية حسب المبنى", "Filter by building"),
@@ -214,7 +239,9 @@ const UI = {
   restart:  T("התחל מחדש", "ابدأ من جديد", "Start over"),
   draft:    T("טיוטת הוראות. התמונות צולמו בשטח; אנשים בתמונות טושטשו.", "تعليمات مسودّة. الصور التُقطت في الموقع، وتم تمويه الأشخاص الظاهرين فيها.", "Draft directions. Photos were taken on site; people in them are blurred."),
   pending:  T("הוראות ההגעה לחדר הזה עוד לא הוזנו.", "لم تتم إضافة تعليمات الوصول إلى هذه الغرفة بعد.", "Directions to this room haven't been added yet."),
-  foot:     T("ההוראות עלולות להשתנות בעקבות שיפוצים או סגירת כניסות.", "قد تتغير التعليمات بسبب أعمال ترميم أو إغلاق مداخل.", "Directions may change because of renovations or closed entrances."),
+  discH:    T("כלי עזר לא רשמי", "أداة مساعدة غير رسمية", "Unofficial helper tool"),
+  disc:     T("האפליקציה אינה שירות רשמי של האוניברסיטה העברית או של בית הספר לעבודה סוציאלית ולרווחה חברתית, ונועדה לעזור בלבד. ההוראות עלולות להשתנות בעקבות שיפוצים או סגירת כניסות.", "هذا التطبيق ليس خدمة رسمية للجامعة العبرية أو لمدرسة العمل الاجتماعي والرفاه الاجتماعي، وهو للمساعدة فقط. قد تتغير التعليمات بسبب أعمال ترميم أو إغلاق مداخل.", "This app is not an official service of the Hebrew University or of the School of Social Work and Social Welfare. It is meant only as a help. Directions may change because of renovations or closed entrances."),
+  discHelp: T("תמיד אפשר לפנות לעזרה במזכירות בית הספר לעבודה סוציאלית ולרווחה חברתית.", "يمكنكم دائمًا التوجه لطلب المساعدة من سكرتارية مدرسة العمل الاجتماعي والرفاه الاجتماعي.", "You can always ask for help at the office of the School of Social Work and Social Welfare."),
   pTitle:   T("מדיניות פרטיות", "سياسة الخصوصية", "Privacy policy"),
   pDraft:   T("טיוטה. יש להשלים את פרטי המפעיל לפני הפצה.", "مسودّة. يجب إكمال تفاصيل الجهة المشغّلة قبل النشر.", "Draft. Operator details must be completed before release."),
   pCollH:   T("איזה מידע נאסף", "ما المعلومات التي تُجمع", "What information is collected"),
@@ -222,10 +249,17 @@ const UI = {
   pLocH:    T("מיקום", "الموقع", "Location"),
   pLoc:     T("האפליקציה לא משתמשת במיקום שלך ולא מבקשת גישה אליו. ההוראות מבוססות על תמונות מהשטח בלבד.", "التطبيق لا يستخدم موقعكم ولا يطلب الوصول إليه. التعليمات مبنية على صور من الموقع فقط.", "The app doesn't use your location or ask for access to it. Directions are based only on photos taken on site."),
   pDevH:    T("מה נשמר במכשיר", "ما الذي يُحفظ على الجهاز", "What is saved on your device"),
-  pDev:     T("רק בחירת השפה, כדי שהאפליקציה תיפתח בשפה שבחרת. אין עוגיות ואין נתונים אחרים.", "فقط اختيار اللغة، ليفتح التطبيق باللغة التي اخترتموها. لا توجد ملفات تعريف ارتباط ولا بيانات أخرى.", "Only your language choice, so the app opens in the language you picked. No cookies and no other data."),
+  pDev:     T("רק בחירת השפה והאם מצב הנגישות פועל, כדי שהאפליקציה תיפתח כמו שהשארת אותה. אין עוגיות ואין נתונים אחרים.", "فقط اختيار اللغة وما إذا كان وضع الإتاحة مُفعّلاً، ليفتح التطبيق كما تركتموه. لا توجد ملفات تعريف ارتباط ولا بيانات أخرى.", "Only your language choice and whether step-free mode is on, so the app opens the way you left it. No cookies and no other data."),
   pOpH:     T("מי מפעיל את האפליקציה", "من يشغّل التطبيق", "Who runs the app"),
-  pOp:      T("[שם המפעיל ודרך יצירת קשר — להשלמה]. האפליקציה אינה שירות רשמי של האוניברסיטה העברית.", "[اسم الجهة المشغّلة ووسيلة التواصل — للإكمال]. التطبيق ليس خدمة رسمية للجامعة العبرية.", "[Operator name and contact — to be completed]. The app is not an official Hebrew University service."),
+  pOp:      T("[שם המפעיל ודרך יצירת קשר — להשלמה]. האפליקציה היא כלי עזר לא רשמי. היא אינה שירות של האוניברסיטה העברית או של בית הספר לעבודה סוציאלית ולרווחה חברתית, ואינה מייצגת אותם. לעזרה אפשר תמיד לפנות למזכירות בית הספר.", "[اسم الجهة المشغّلة ووسيلة التواصل — للإكمال]. التطبيق أداة مساعدة غير رسمية. ليس خدمة للجامعة العبرية أو لمدرسة العمل الاجتماعي والرفاه الاجتماعي، ولا يمثّلهما. للمساعدة يمكن دائمًا التوجه إلى سكرتارية المدرسة.", "[Operator name and contact — to be completed]. The app is an unofficial helper tool. It is not a service of, and does not represent, the Hebrew University or the School of Social Work and Social Welfare. For help, you can always contact the school office."),
   pBack:    T("חזרה", "رجوع", "Back"),
+  a11yBtn:  T("מסלול נגיש (בלי מדרגות)", "مسار متاح (بدون درج)", "Step-free route"),
+  a11yOn:   T("מצב נגיש פועל: מוצגים רק מסלולים בלי מדרגות, למשל לכיסא גלגלים או לעגלת תינוק.", "وضع الإتاحة مُفعّل: تُعرض فقط مسارات بدون درج، مثلاً لكرسي متحرك أو عربة أطفال.", "Step-free mode is on: only routes without stairs are shown, e.g. for a wheelchair or a stroller."),
+  accOk:    T("♿ מסלול נגיש", "♿ مسار متاح", "♿ Step-free route"),
+  accNone:  T("אין עדיין מסלול נגיש", "لا يوجد مسار متاح بعد", "No step-free route yet"),
+  accCheck: T("המסלול הנגיש עוד לא נבדק בשטח עם כיסא גלגלים או עגלה.", "لم يتم فحص المسار المتاح بعد في الموقع مع كرسي متحرك أو عربة.", "This step-free route hasn't been tested on site with a wheelchair or stroller yet."),
+  noAcc:    T("עדיין אין מסלול נגיש מאומת לחדר הזה. אפשר לכבות את מצב הנגישות כדי לראות את המסלול הרגיל, שעובר במדרגות.", "لا يوجد بعد مسار متاح مؤكَّد إلى هذه الغرفة. يمكن إيقاف وضع الإتاحة لعرض المسار العادي الذي يمر عبر الدرج.", "There's no confirmed step-free route to this room yet. You can turn off step-free mode to see the regular route, which uses stairs."),
+  noAccLift:T("המעליות של בניינים 52–53 (קומה 3) מגיעות לקומה 2, אבל הדרך מהמעלית לחדר עוד לא צולמה.", "مصاعد المبنيين 52–53 (الطابق 3) تصل إلى الطابق 2، لكن الطريق من المصعد إلى الغرفة لم يُصوَّر بعد.", "The Building 52–53 elevators (Floor 3) reach Floor 2, but the way from the elevator to the room hasn't been photographed yet."),
   room:     p => T(`חדר ${p}`, `غرفة ${p}`, `Room ${p}`),
   bldg:     b => T(`בניין ${b}`, `مبنى ${b}`, `Building ${b}`),
   floor:    f => T(`קומה ${f}`, `طابق ${f}`, `Floor ${f}`),
@@ -259,7 +293,7 @@ const DATA = {
       tip:T("עד 16:00 נכנסים דרך הספרייה. משעה 16:00 הכניסה והיציאה דרך הדלת הזו.","حتى الساعة 16:00 يتم الدخول عبر المكتبة. من الساعة 16:00 الدخول والخروج من هذا الباب.","Until 16:00, enter through the library. From 16:00, enter and exit through this door.")},
     {plate:"24-301", floor:"3", area:"soc4"}, {plate:"24-302", floor:"3", area:"soc4"},
     {plate:"42505", floor:"5", area:"hum42"}, {plate:"42506", floor:"5", area:"hum42"},
-    {plate:"200", area:"buber", label:T("בובר 200","بوبر 200","Buber 200")}
+    {plate:"200", bldg:"67", floor:"2", photo:"img/buber/8_d200.jpg", area:"buber", label:T("בובר 200","بوبر 200","Buber 200")}
   ]
 };
 
@@ -378,7 +412,16 @@ const ROUTES = {
   "24-301": {from:FROM.forum, steps:R24},
   "24-302": {from:FROM.forum, steps:R24},
   "42505": {from:FROM.sw, steps:[...R42, A("img/b2/h_12_505.jpg","חדר הסמינרים 42505.","غرفة السيمينار 42505.","Seminar room 42505.")]},
-  "42506": {from:FROM.sw, steps:[...R42, A("img/b2/h_13_506.jpg","חדר הסמינרים 42506.","غرفة السيمينار 42506.","Seminar room 42506.")]}
+  "42506": {from:FROM.sw, steps:[...R42, A("img/b2/h_13_506.jpg","חדר הסמינרים 42506.","غرفة السيمينار 42506.","Seminar room 42506.")]},
+  "200": {from:FROM.sw, steps:[
+    S("img/buber/1_fox.jpg", "יוצאים דרך הלובי של בית הספר לחינוך (הקיר עם הכיתוב \"סימור פוקס\") ומשם החוצה בדלתות הזכוכית.", "اخرجوا عبر ردهة مدرسة التربية (الجدار الذي عليه \"سيمور فوكس\") ومن هناك إلى الخارج عبر الأبواب الزجاجية.", "Go out through the School of Education lobby (the wall with \"Seymour Fox\") and outside through the glass doors."),
+    S("img/buber/2_garden.jpg", "בחוץ הולכים בשביל האבן בגינה, לפי השלט האדום \"61–67\".", "في الخارج امشوا على الممر الحجري في الحديقة، حسب اللافتة الحمراء \"61–67\".", "Outside, follow the stone path through the garden toward the red \"61–67\" sign."),
+    S("img/buber/3_path.jpg", "ממשיכים בשביל בין השיחים עד הבניין.", "استمروا على الممر بين الشجيرات حتى المبنى.", "Keep following the path between the bushes to the building."),
+    S("img/buber/4_stairs67.jpg", "עולים במדרגות ליד המספר 67 על הקיר.", "اصعدوا الدرج بجانب الرقم 67 على الجدار.", "Go up the stairs next to the number 67 on the wall."),
+    S("img/buber/5_pillars.jpg", "עוברים במעבר המקורה שבין העמודים.", "مرّوا في الممر المسقوف بين الأعمدة.", "Walk through the covered passage between the pillars."),
+    S("img/buber/6_glass.jpg", "נכנסים לבניין בדלתות הזכוכית.", "ادخلوا المبنى عبر الأبواب الزجاجية.", "Enter the building through the glass doors."),
+    S("img/buber/7_lobby.jpg", "בלובי, ליד הספסלים הירוקים ומכונות השתייה, ממשיכים במסדרון. השלט הכחול מראה \"קומה 2 · אולמות 200, 202\".", "في الردهة، بجانب المقاعد الخضراء وآلات المشروبات، استمروا في الممر. اللافتة الزرقاء تشير إلى \"طابق 2 · قاعات 200، 202\".", "In the lobby, by the green benches and drink machines, continue down the corridor. The blue sign shows \"Floor 2 · Halls 200, 202\"."),
+    A("img/buber/8_d200.jpg", "אולם 200.", "القاعة 200.", "Hall 200.")]},
 };
 const STAIRS_TIP = T("אפשר גם במדרגות: דלת הזכוכית עם השלט הירוק \"לקומות 2, 3, 4, 5 · בניין 52\".",
   "يمكن أيضًا استخدام الدرج: الباب الزجاجي الذي عليه اللافتة الخضراء \"إلى الطوابق 2، 3، 4، 5 · مبنى 52\".",
@@ -388,12 +431,61 @@ for (const r of DATA.rooms) {
   r.route = rt;
   if (rt.from === FROM.lifts) { r.bldg ||= "52"; if (["420","422","428","520","528"].includes(r.plate)) r.tip ||= STAIRS_TIP; }
 }
+/* נגישות: מסלולים בלי מדרגות. מעליות 52–53, ומסלולים שבתמונות שלהם אין מדרגות (לבדיקה בשטח) */
+const ACCESSIBLE = ["420","422","428","520","528","600","602","603","359","365","399","24-301","24-302"];
+/* אושרו בשטח */
+const ACC_CONFIRMED = ["520","528","600","602","603","359","365","399","24-301","24-302"];
+const LIFT_HINT  = ["283"];
+/* מסלול נגיש לקומה 2 (220, 224): מעליות 52–53 → בית הספר לריפוי בעיסוק → מסדרון עו״ס */
+const ACC_F2 = [
+  S("img/acc2/lifts.jpg", "מגיעים למעליות של בניינים 52–53 בקומה 3.", "تصلون إلى مصاعد المبنيين 52–53 في الطابق 3.", "Reach the Building 52–53 elevators on Floor 3."),
+  STEP.panel(2),
+  S("img/acc2/ot.jpg", "יוצאים מהמעלית בקומה 2 ונכנסים בדלתות הפתוחות של \"בית הספר לריפוי בעיסוק · 52\".", "اخرجوا من المصعد في الطابق 2 وادخلوا من الأبواب المفتوحة لـ\"قسم العلاج الوظيفي · 52\".", "Leave the elevator on Floor 2 and go through the open doors of the \"School of Occupational Therapy · 52\"."),
+  S("img/acc2/c204.jpg", "ממשיכים ישר במסדרון, לאורך החדרים 204 ואילך.", "استمروا مباشرة في الممر، بمحاذاة الغرف 204 وما بعدها.", "Keep straight down the corridor, past room 204 and onward."),
+  S("img/acc2/s209.jpg", "מגיעים לשלט \"ביה״ס לעבודה סוציאלית · קומה 2\" ליד הדלת האדומה 209.", "تصلون إلى لافتة \"مدرسة العمل الاجتماعي · طابق 2\" بجانب الباب الأحمر 209.", "Reach the \"School of Social Work · Floor 2\" sign next to red door 209."),
+  S("img/acc2/cpics.jpg", "ממשיכים במסדרון עם תמונות הנוף על הקירות.", "استمروا في الممر الذي على جدرانه صور مناظر طبيعية.", "Continue along the corridor with landscape pictures on the walls."),
+  S("img/acc2/open.jpg", "מגיעים לרחבה עם תמונות הנוף. מכאן מחפשים את מספר החדר ליד הדלתות האדומות.", "تصلون إلى الساحة ذات صور المناظر. من هنا ابحثوا عن رقم الغرفة بجانب الأبواب الحمراء.", "Reach the open area with the landscape pictures. From here, look for the room number by the red doors.")
+];
+const ACC_EXTRA = {
+  "220": {from:FROM.lifts, steps:[...ACC_F2, A("img/b52/d220.jpg","הדלת האדומה ליד ארון הכיבוי היא כיתה 220.","الباب الأحمر بجانب خزانة الإطفاء هو الغرفة 220.","The red door next to the fire cabinet is room 220.")]},
+  "224": {from:FROM.lifts, steps:[...ACC_F2, A("img/b52/d224.jpg","הדלת האדומה עם השלט 224, צמודה לחדר 223.","الباب الأحمر الذي عليه لافتة 224، بجانب الغرفة 223.","The red door with the 224 sign, next to room 223.")]}
+};
+/* מדעי הרוח 42505/42506: דרך המעלית בבניין 43 לקומה 5 */
+const ACC_42 = [STEP.lobby, R42[1], R42[2], R42[3],
+  S("img/acc42/lift43.jpg", "במסדרון הפקולטה מגיעים למעלית של בניין 43 (השלט הכחול עם המספר 43). עולים בה לקומה 5.", "في ممر الكلية تصلون إلى مصعد مبنى 43 (اللافتة الزرقاء مع الرقم 43). اصعدوا به إلى الطابق 5.", "In the faculty corridor, reach the Building 43 elevator (blue sign with 43). Take it up to Floor 5."),
+  S("img/acc42/f5doors.jpg", "בקומה 5 עוברים בדלתות הפתוחות אל \"המכון ללימודי אסיה ואפריקה\".", "في الطابق 5 مرّوا عبر الأبواب المفتوحة إلى \"معهد دراسات آسيا وأفريقيا\".", "On Floor 5, go through the open doors into the \"Institute of Asian and African Studies\"."),
+  S("img/acc42/bluecorr.jpg", "ממשיכים ישר במסדרון עם הקיר הכחול.", "استمروا مباشرة في الممر ذي الجدار الأزرق.", "Keep straight down the corridor with the blue wall."),
+  S("img/acc42/pillars.jpg", "ממשיכים בין העמודים הלבנים לכיוון השלט \"יציאה\".", "استمروا بين الأعمدة البيضاء باتجاه لافتة \"خروج\".", "Continue between the white pillars toward the \"Exit\" sign."),
+  S("img/acc42/narrow.jpg", "עוברים בפתח הצר ובדלת \"יציאה\" שאחריו. שימו לב לסף בפתח.", "مرّوا عبر الفتحة الضيقة والباب \"خروج\" الذي بعدها. انتبهوا للعتبة عند الفتحة.", "Go through the narrow doorway and the \"Exit\" door after it. Watch for the threshold."),
+  S("img/acc42/c5209.jpg", "נכנסים למסדרון של \"הרשות לתלמידי מחקר\" (חדר 5209) וממשיכים ישר.", "ادخلوا ممر \"سلطة طلاب البحث\" (الغرفة 5209) واستمروا مباشرة.", "Enter the \"Authority for Research Students\" corridor (room 5209) and keep straight."),
+  S("img/acc42/lobby42.jpg", "מגיעים לרחבה עם הספסל הכתום. השלט על הקיר מצביע לחדרי הסמינר 42505 ו-42506.", "تصلون إلى الساحة ذات المقعد البرتقالي. اللافتة على الجدار تشير إلى غرف السيمينار 42505 و42506.", "Reach the area with the orange bench. The sign on the wall points to seminar rooms 42505 and 42506.")
+];
+ACC_EXTRA["42505"] = {from:FROM.sw, steps:[...ACC_42, A("img/b2/h_12_505.jpg","חדר הסמינרים 42505.","غرفة السيمينار 42505.","Seminar room 42505.")]};
+ACC_EXTRA["42506"] = {from:FROM.sw, steps:[...ACC_42, A("img/b2/h_13_506.jpg","חדר הסמינרים 42506.","غرفة السيمينار 42506.","Seminar room 42506.")]};
+/* בובר 200: אותו מסלול, עם הרמפה במקום המדרגות ליד בניין 67 */
+ACC_EXTRA["200"] = {from:FROM.sw, steps:ROUTES["200"].steps.map(st => st.img === "img/buber/4_stairs67.jpg"
+  ? S("img/buber/4_stairs67.jpg", "ליד המספר 67 על הקיר עולים ברמפה עם המעקה, מימין למדרגות.", "بجانب الرقم 67 على الجدار اصعدوا المنحدر ذا الدرابزين، على يمين الدرج.", "By the number 67 on the wall, go up the ramp with the handrail, to the right of the stairs.")
+  : st)};
+for (const r of DATA.rooms) {
+  if (ACCESSIBLE.includes(r.plate) && r.route) { r.accRoute = r.route; r.accOk = ACC_CONFIRMED.includes(r.plate); }
+  if (LIFT_HINT.includes(r.plate)) r.accHint = true;
+  if (ACC_EXTRA[r.plate]) { r.accRoute = ACC_EXTRA[r.plate]; r.accOk = true; }
+}
 
 /* ===== תצוגה ===== */
 const $ = id => document.getElementById(id);
 const areaOf = r => DATA.areas.find(a => a.id === r.area);
 const titleOf = r => r.label || UI.room(r.plate);
 let current = null, lastView = "viewHome", areaFilter = "all", stepIdx = 0;
+let a11y = false;
+try { a11y = localStorage.getItem("mzp-a11y") === "1"; } catch(e) {}
+const activeRoute = r => a11y ? r.accRoute : r.route;
+function applyA11y(){
+  $("a11y").setAttribute("aria-pressed", a11y);
+  $("accOn").hidden = !a11y;
+  renderList();
+  if (!$("viewRoom").hidden && current) { stepIdx = 0; renderRoom(); }
+}
 
 function show(v){ for (const id of ["viewHome","viewRoom","viewPrivacy"]) $(id).hidden = id !== v; window.scrollTo(0,0); }
 function currentView(){ return ["viewHome","viewRoom","viewPrivacy"].find(id => !$(id).hidden) || "viewHome"; }
@@ -407,9 +499,9 @@ function applyLang(){
   $("q").placeholder = tr(UI.qPh);
   $("chips").setAttribute("aria-label", tr(UI.filter));
   document.querySelectorAll(".lang").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang === lang));
-  buildChips(); renderList();
-  if (!$("viewRoom").hidden && current) renderRoom();
+  buildChips(); applyA11y();
 }
+$("a11y").onclick = () => { a11y = !a11y; try { localStorage.setItem("mzp-a11y", a11y ? "1" : "0"); } catch(e) {} applyA11y(); };
 document.querySelectorAll(".lang").forEach(b => b.onclick = () => {
   lang = b.dataset.lang;
   try { localStorage.setItem("mzp-lang", lang); } catch(e) {}
@@ -452,8 +544,14 @@ function renderList(){
       if (r.bldg) bits.push(tr(UI.bldg(r.bldg)));
       if (r.floor) bits.push(tr(UI.floor(r.floor))); else if (a.note) bits.push(tr(a.note));
       if (r.photo) bits.push(tr(UI.hasPhoto));
-      if (r.route) bits.push(tr(UI.hasRoute));
+      if (!a11y && r.route) bits.push(tr(UI.hasRoute));
       b.querySelector(".muted").textContent = bits.join(" · ");
+      if (a11y) {
+        const bd = document.createElement("span");
+        bd.className = "small " + (r.accRoute ? "badge-acc" : "badge-noacc");
+        bd.textContent = tr(r.accRoute ? UI.accOk : UI.accNone);
+        b.querySelector(".meta").appendChild(bd);
+      }
       b.onclick = () => openRoom(r);
       sec.appendChild(b);
     }
@@ -473,15 +571,21 @@ function renderRoom(){
   if (r.bldg) where.push(tr(UI.bldg(r.bldg)));
   if (r.floor) where.push(tr(UI.floor(r.floor))); else if (a.note) where.push(tr(a.note));
   $("rWhere").textContent = where.join(" · ");
-  $("rTip").hidden = !r.tip; $("rTip").textContent = r.tip ? tr(r.tip) : "";
+  const tip = (a11y && r.tip === STAIRS_TIP) ? null : r.tip;
+  $("rTip").hidden = !tip; $("rTip").textContent = tip ? tr(tip) : "";
   $("rFig").hidden = !r.photo;
   if (r.photo) { $("rImg").src = r.photo; $("rImg").alt = tr(UI.doorAlt(titleOf(r).he ? titleOf(r) : T(titleOf(r),titleOf(r),titleOf(r)))); }
-  $("stepper").hidden = !r.route; $("indoorPending").hidden = !!r.route;
-  if (r.route) renderStepper();
+  const rt = activeRoute(r);
+  $("stepper").hidden = !rt; $("indoorPending").hidden = !!rt;
+  if (!rt) $("indoorPending").textContent = a11y
+      ? (r.route ? tr(UI.noAcc) : tr(UI.pending)) + (r.accHint ? " " + tr(UI.noAccLift) : "")
+      : tr(UI.pending);
+  if (rt) renderStepper();
 }
 function renderStepper(){
-  const st = current.route.steps, n = st.length, s = st[stepIdx], last = stepIdx === n - 1;
-  $("stFrom").textContent = tr(UI.from(current.route.from));
+  const rt = activeRoute(current), st = rt.steps, n = st.length, s = st[stepIdx], last = stepIdx === n - 1;
+  $("stFrom").textContent = (a11y ? "♿ " : "") + tr(UI.from(rt.from));
+  $("stDraftExtra").hidden = !a11y || !!current.accOk;
   $("stCount").textContent = tr(UI.stepOf(stepIdx + 1, n));
   $("stBar").style.width = `${(stepIdx + 1) / n * 100}%`;
   $("stImg").src = s.img; $("stImg").alt = tr(s.text);
@@ -491,7 +595,7 @@ function renderStepper(){
   if (!last) { const im = new Image(); im.src = st[stepIdx + 1].img; }
 }
 $("stPrev").onclick = () => { if (stepIdx > 0) { stepIdx--; renderStepper(); } };
-$("stNext").onclick = () => { const n = current.route.steps.length; stepIdx = stepIdx < n - 1 ? stepIdx + 1 : 0; renderStepper(); $("stepper").scrollIntoView({block:"start", behavior:"smooth"}); };
+$("stNext").onclick = () => { const n = activeRoute(current).steps.length; stepIdx = stepIdx < n - 1 ? stepIdx + 1 : 0; renderStepper(); $("stepper").scrollIntoView({block:"start", behavior:"smooth"}); };
 
 applyLang();
 show("viewHome");
