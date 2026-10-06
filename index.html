@@ -220,38 +220,13 @@ figure.door figcaption{font-size:.8rem;color:var(--muted)}
         </div>
         <p class="fb-msg" id="rateMsg" aria-live="polite" hidden></p>
         <button type="button" class="linkbtn report-link" id="reportRoom" data-t="reportRoom"></button>
+        <p class="small muted" data-t="mailHint"></p>
+        <button type="button" class="linkbtn report-link" id="copyMail" data-t="copyMail"></button>
+        <p class="fb-msg" id="copyMsg" aria-live="polite" hidden></p>
       </div>
     </div>
   </section>
 
-  <section id="viewReport" class="panel" aria-labelledby="repH" hidden>
-    <h2 id="repH" data-t="repTitle"></h2>
-    <p class="small muted" data-t="repIntro"></p>
-    <p class="ctx" id="repCtx"></p>
-    <form id="repForm" class="fb" novalidate>
-      <label class="field" for="repKind"><span data-t="repKindL"></span>
-        <select id="repKind" class="field-in">
-          <option value="route" data-t="kRoute"></option>
-          <option value="photo" data-t="kPhoto"></option>
-          <option value="access" data-t="kAccess"></option>
-          <option value="missing" data-t="kMissing"></option>
-          <option value="other" data-t="kOther"></option>
-        </select>
-      </label>
-      <label class="field" for="repText"><span data-t="repTextL"></span>
-        <textarea id="repText" class="field-in" maxlength="1500" required></textarea>
-      </label>
-      <label class="field" for="repReply"><span data-t="repReplyL"></span>
-        <input id="repReply" class="field-in" type="email" autocomplete="email" inputmode="email">
-      </label>
-      <label class="hp" aria-hidden="true">botcheck <input type="checkbox" id="repBot" tabindex="-1"></label>
-      <p class="fb-msg" id="repMsg" aria-live="polite" hidden></p>
-      <div class="row">
-        <button type="submit" class="btn btn-primary" id="repSend" data-t="repSend"></button>
-        <button type="button" class="btn btn-ghost" id="repCancel" data-t="repCancel"></button>
-      </div>
-    </form>
-  </section>
 
   <section id="viewPrivacy" class="panel" aria-labelledby="privH" hidden>
     <h2 id="privH" data-t="pTitle"></h2>
@@ -302,42 +277,24 @@ const UI = {
   pTitle:   T("מדיניות פרטיות", "سياسة الخصوصية", "Privacy policy"),
   pDraft:   T("טיוטה. יש להשלים את פרטי המפעיל לפני הפצה.", "مسودّة. يجب إكمال تفاصيل الجهة المشغّلة قبل النشر.", "Draft. Operator details must be completed before release."),
   pCollH:   T("איזה מידע נאסף", "ما المعلومات التي تُجمع", "What information is collected"),
-  pColl:    T("אין הרשמה ואין חשבון משתמש. האפליקציה שולחת מידע רק כשבוחרים לתת משוב: לחיצה על \"אהבתי\" או \"לא אהבתי\", או דיווח על טעות. נשלחים רק הדירוג או הטקסט שכתבתם, החדר והצעד במסלול, השפה, והאם מצב הנגישות פעל. מייל לתשובה נשלח רק אם בחרתם למלא אותו. המשוב עובר דרך שירות הטפסים Web3Forms ומגיע לצוות שמתחזק את האפליקציה בלבד.", "لا يوجد تسجيل ولا حساب مستخدم. يرسل التطبيق معلومات فقط عندما تختارون إعطاء ملاحظات: الضغط على \"أعجبني\" أو \"لم يعجبني\"، أو الإبلاغ عن خطأ. يُرسل فقط التقييم أو النص الذي كتبتموه، والغرفة والخطوة في المسار، واللغة، وما إذا كان وضع الإتاحة مُفعّلاً. يُرسل البريد الإلكتروني للرد فقط إذا اخترتم كتابته. تمر الملاحظات عبر خدمة النماذج Web3Forms وتصل فقط إلى الفريق الذي يدير التطبيق.", "There's no sign-up and no user account. The app sends information only when you choose to give feedback: tapping \"Liked it\" or \"Didn't like it\", or reporting a problem. Only the rating or text you wrote, the room and route step, the language, and whether step-free mode was on are sent. A reply email is sent only if you choose to fill it in. Feedback goes through the Web3Forms form service and reaches only the team that maintains the app."),
+  pColl:    T("האפליקציה לא אוספת ולא שולחת שום מידע. אין הרשמה, אין חשבון משתמש ואין שרת. כשבוחרים לתת משוב או לדווח על טעות, נפתח מייל באפליקציית המייל שלך. אתם רואים את כל מה שכתוב בו לפני השליחה, והוא נשלח מהמייל שלכם רק אם לוחצים \"שליחה\".", "التطبيق لا يجمع ولا يرسل أي معلومات. لا يوجد تسجيل ولا حساب مستخدم ولا خادم. عندما تختارون إعطاء ملاحظات أو الإبلاغ عن خطأ، يُفتح بريد في تطبيق البريد لديكم. ترون كل ما فيه قبل الإرسال، ويُرسل من بريدكم فقط إذا ضغطتم \"إرسال\".", "The app doesn't collect or send any information. There's no sign-up, no user account and no server. When you choose to give feedback or report a problem, an email opens in your own mail app. You see everything in it before sending, and it's sent from your email only if you tap \"Send\"."),
   pLocH:    T("מיקום", "الموقع", "Location"),
   pLoc:     T("האפליקציה לא משתמשת במיקום שלך ולא מבקשת גישה אליו. ההוראות מבוססות על תמונות מהשטח בלבד.", "التطبيق لا يستخدم موقعكم ولا يطلب الوصول إليه. التعليمات مبنية على صور من الموقع فقط.", "The app doesn't use your location or ask for access to it. Directions are based only on photos taken on site."),
   pDevH:    T("מה נשמר במכשיר", "ما الذي يُحفظ على الجهاز", "What is saved on your device"),
-  pDev:     T("בחירת השפה, האם מצב הנגישות פועל, ואילו מסלולים כבר דירגת, כדי שלא תתבקש/י לדרג שוב. אין עוגיות ואין נתונים אחרים.", "اختيار اللغة، وما إذا كان وضع الإتاحة مُفعّلاً، وأي مسارات قيّمتموها، حتى لا يُطلب منكم التقييم مجددًا. لا توجد ملفات تعريف ارتباط ولا بيانات أخرى.", "Your language choice, whether step-free mode is on, and which routes you've already rated, so you aren't asked again. No cookies and no other data."),
+  pDev:     T("רק בחירת השפה והאם מצב הנגישות פועל, כדי שהאפליקציה תיפתח כמו שהשארת אותה. אין עוגיות ואין נתונים אחרים.", "فقط اختيار اللغة وما إذا كان وضع الإتاحة مُفعّلاً، ليفتح التطبيق كما تركتموه. لا توجد ملفات تعريف ارتباط ولا بيانات أخرى.", "Only your language choice and whether step-free mode is on, so the app opens the way you left it. No cookies and no other data."),
   pOpH:     T("מי מפעיל את האפליקציה", "من يشغّل التطبيق", "Who runs the app"),
   pOp:      T("[שם המפעיל ודרך יצירת קשר — להשלמה]. האפליקציה היא כלי עזר לא רשמי. היא אינה שירות של האוניברסיטה העברית או של בית הספר לעבודה סוציאלית ולרווחה חברתית, ואינה מייצגת אותם. לעזרה אפשר תמיד לפנות למזכירות בית הספר.", "[اسم الجهة المشغّلة ووسيلة التواصل — للإكمال]. التطبيق أداة مساعدة غير رسمية. ليس خدمة للجامعة العبرية أو لمدرسة العمل الاجتماعي والرفاه الاجتماعي، ولا يمثّلهما. للمساعدة يمكن دائمًا التوجه إلى سكرتارية المدرسة.", "[Operator name and contact — to be completed]. The app is an unofficial helper tool. It is not a service of, and does not represent, the Hebrew University or the School of Social Work and Social Welfare. For help, you can always contact the school office."),
   pBack:    T("חזרה", "رجوع", "Back"),
   rateQ:    T("המסלול עזר לך?", "هل ساعدك المسار؟", "Did this route help you?"),
   rateUp:   T("אהבתי", "أعجبني", "Liked it"),
   rateDown: T("לא אהבתי", "لم يعجبني", "Didn't like it"),
-  rateThx:  T("תודה על המשוב!", "شكرًا على ملاحظاتكم!", "Thanks for the feedback!"),
-  rateThxDown: T("תודה. אם תספרו לנו מה לא עבד, נוכל לתקן.", "شكرًا. إذا أخبرتمونا بما لم ينجح، يمكننا إصلاحه.", "Thanks. If you tell us what didn't work, we can fix it."),
-  rateDone: T("כבר דירגת את המסלול הזה. תודה!", "لقد قيّمتم هذا المسار بالفعل. شكرًا!", "You've already rated this route. Thanks!"),
+  rateThx:  T("נפתח מייל מוכן. נשאר רק ללחוץ \"שליחה\". תודה!", "يُفتح بريد جاهز. بقي فقط الضغط على \"إرسال\". شكرًا!", "A ready email opens. Just tap \"Send\". Thanks!"),
   reportRoom:    T("מצאתם טעות במסלול או משהו שדורש תיקון? דווחו לנו", "وجدتم خطأً في المسار أو شيئًا يحتاج إلى تصحيح؟ أخبرونا", "Found a mistake in this route or something to fix? Tell us"),
   reportGeneral: T("מצאתם טעות או משהו שדורש תיקון? דווחו לנו", "وجدتم خطأً أو شيئًا يحتاج إلى تصحيح؟ أخبرونا", "Found a mistake or something to fix? Tell us"),
-  repTitle: T("דיווח על טעות", "الإبلاغ عن خطأ", "Report a problem"),
-  repIntro: T("הדיווח נשלח לצוות שמתחזק את האפליקציה. אין צורך לכתוב שם.", "يُرسل البلاغ إلى الفريق الذي يدير التطبيق. لا حاجة لكتابة الاسم.", "Your report goes to the team that maintains the app. You don't need to give your name."),
-  repKindL: T("מה הבעיה?", "ما المشكلة؟", "What's the problem?"),
-  kRoute:   T("הוראה לא נכונה במסלול", "تعليمات غير صحيحة في المسار", "Wrong direction in the route"),
-  kPhoto:   T("תמונה לא נכונה או לא ברורה", "صورة غير صحيحة أو غير واضحة", "Wrong or unclear photo"),
-  kAccess:  T("בעיית נגישות (מדרגה, דלת, מעלית)", "مشكلة إتاحة (درجة، باب، مصعد)", "Accessibility problem (step, door, elevator)"),
-  kMissing: T("חדר חסר או מספר חדר שגוי", "غرفة ناقصة أو رقم غرفة خاطئ", "Missing room or wrong room number"),
-  kOther:   T("משהו אחר", "شيء آخر", "Something else"),
-  repTextL: T("תארו את הבעיה", "صفوا المشكلة", "Describe the problem"),
-  repReplyL:T("מייל לתשובה (לא חובה)", "بريد إلكتروني للرد (اختياري)", "Email for a reply (optional)"),
-  repSend:  T("שליחה", "إرسال", "Send"),
-  repCancel:T("ביטול", "إلغاء", "Cancel"),
-  repEmpty: T("כתבו כמה מילים על הבעיה לפני השליחה.", "اكتبوا بضع كلمات عن المشكلة قبل الإرسال.", "Write a few words about the problem before sending."),
-  repSending:T("שולח…", "جارٍ الإرسال…", "Sending…"),
-  repOk:    T("הדיווח נשלח. תודה שעזרתם לשפר את האפליקציה!", "تم إرسال البلاغ. شكرًا لمساعدتكم في تحسين التطبيق!", "Report sent. Thanks for helping improve the app!"),
-  sendOff:  T("השליחה עוד לא הופעלה באפליקציה. בינתיים אפשר לפנות למזכירות בית הספר.", "لم يتم تفعيل الإرسال في التطبيق بعد. في الأثناء يمكن التوجه إلى سكرتارية المدرسة.", "Sending isn't switched on in the app yet. Meanwhile, you can contact the school office."),
-  sendErr:  T("לא הצלחנו לשלוח. בדקו את החיבור לאינטרנט ונסו שוב.", "لم نتمكن من الإرسال. تحققوا من الاتصال بالإنترنت وحاولوا مجددًا.", "We couldn't send it. Check your internet connection and try again."),
-  ctxRoom:  (t,i,n) => T(`${t.he} · צעד ${i} מתוך ${n}`, `${t.ar} · خطوة ${i} من ${n}`, `${t.en} · step ${i} of ${n}`),
-  ctxRoomNoStep: t => T(t.he, t.ar, t.en),
-  ctxGeneral: T("דיווח כללי על האפליקציה", "بلاغ عام عن التطبيق", "General report about the app"),
+  mailHint: T("הלחיצה פותחת מייל באפליקציית המייל שלך, עם הנושא ופרטי המסלול כבר בפנים. כותבים מה קרה ושולחים.", "الضغط يفتح بريدًا في تطبيق البريد لديكم، مع الموضوع وتفاصيل المسار. اكتبوا ما حدث وأرسلوا.", "This opens an email in your mail app with the subject and route details filled in. Write what happened and send."),
+  copyMail: T("לא נפתח מייל? העתקת כתובת הדיווח", "لم يُفتح البريد؟ نسخ عنوان الإبلاغ", "No email opened? Copy the report address"),
+  copied:   T("הכתובת הועתקה. אפשר להדביק אותה במייל חדש.", "تم نسخ العنوان. يمكن لصقه في بريد جديد.", "Address copied. Paste it into a new email."),
+  copyFail: T("לא הצלחנו להעתיק. אפשר לפנות למזכירות בית הספר.", "لم نتمكن من النسخ. يمكن التوجه إلى سكرتارية المدرسة.", "Couldn't copy. You can contact the school office."),
   a11yBtn:  T("מסלול נגיש (בלי מדרגות)", "مسار متاح (بدون درج)", "Step-free route"),
   a11yOn:   T("מצב נגיש פועל: מוצגים רק מסלולים בלי מדרגות, למשל לכיסא גלגלים או לעגלת תינוק.", "وضع الإتاحة مُفعّل: تُعرض فقط مسارات بدون درج، مثلاً لكرسي متحرك أو عربة أطفال.", "Step-free mode is on: only routes without stairs are shown, e.g. for a wheelchair or a stroller."),
   accOk:    T("♿ מסלול נגיש", "♿ مسار متاح", "♿ Step-free route"),
@@ -572,8 +529,8 @@ function applyA11y(){
   if (!$("viewRoom").hidden && current) { stepIdx = 0; renderRoom(); }
 }
 
-function show(v){ for (const id of ["viewHome","viewRoom","viewPrivacy","viewReport"]) $(id).hidden = id !== v; window.scrollTo(0,0); }
-function currentView(){ return ["viewHome","viewRoom","viewPrivacy","viewReport"].find(id => !$(id).hidden) || "viewHome"; }
+function show(v){ for (const id of ["viewHome","viewRoom","viewPrivacy"]) $(id).hidden = id !== v; window.scrollTo(0,0); }
+function currentView(){ return ["viewHome","viewRoom","viewPrivacy"].find(id => !$(id).hidden) || "viewHome"; }
 
 function applyLang(){
   const app = $("app"), dir = lang === "en" ? "ltr" : "rtl";
@@ -585,7 +542,6 @@ function applyLang(){
   $("chips").setAttribute("aria-label", tr(UI.filter));
   document.querySelectorAll(".lang").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang === lang));
   buildChips(); applyA11y();
-  if (!$("viewReport").hidden) renderReportCtx();
 }
 $("a11y").onclick = () => { a11y = !a11y; try { localStorage.setItem("mzp-a11y", a11y ? "1" : "0"); } catch(e) {} applyA11y(); };
 document.querySelectorAll(".lang").forEach(b => b.onclick = () => {
@@ -685,92 +641,48 @@ function renderStepper(){
 $("stPrev").onclick = () => { if (stepIdx > 0) { stepIdx--; renderStepper(); } };
 $("stNext").onclick = () => { const n = activeRoute(current).steps.length; stepIdx = stepIdx < n - 1 ? stepIdx + 1 : 0; renderStepper(); $("stepper").scrollIntoView({block:"start", behavior:"smooth"}); };
 
-/* ===== משוב =====
-   המשוב נשלח דרך Web3Forms. כתובת המייל שמקבלת את המשוב מוגדרת אצל Web3Forms
-   (לפי מפתח הגישה) ולא מופיעה בקוד הזה. */
-const FEEDBACK = { endpoint: "https://api.web3forms.com/submit", key: "" };
-const APP_VERSION = "2026-10-06";
-async function sendFeedback(subject, fields){
-  if (!FEEDBACK.key) throw new Error("off");
-  const res = await fetch(FEEDBACK.endpoint, {
-    method: "POST",
-    headers: {"Content-Type": "application/json", "Accept": "application/json"},
-    body: JSON.stringify({ access_key: FEEDBACK.key, subject, from_name: "מצפן עו״ס", botcheck: false, version: APP_VERSION, ...fields })
-  });
-  const j = await res.json().catch(() => ({}));
-  if (!res.ok || !j.success) throw new Error("fail");
+/* ===== משוב: נפתח מייל באפליקציית המייל של המשתמש ===== */
+const REPORT_TO = "oris@savion.huji.ac.il";
+const REPORT_SUBJECT = "דיווח על בעיה באפליקציית מצפן עבודה סוציאלית";
+const MAIL_INTRO = {
+  report: T("תארו כאן את הבעיה:", "صفوا المشكلة هنا:", "Describe the problem here:"),
+  up:     T("אהבתי את המסלול. (אפשר להוסיף הערה)", "أعجبني المسار. (يمكن إضافة ملاحظة)", "I liked this route. (You can add a comment)"),
+  down:   T("לא אהבתי את המסלול. מה לא עבד?", "لم يعجبني المسار. ما الذي لم ينجح؟", "I didn't like this route. What didn't work?")
+};
+function mailContext(withRoom){
+  const lines = [];
+  if (withRoom && current) {
+    const rt = activeRoute(current);
+    lines.push(`חדר: ${current.plate}`);
+    if (rt) lines.push(`צעד במסלול: ${stepIdx + 1} מתוך ${rt.steps.length}`);
+  }
+  lines.push(`שפה: ${lang}`, `מצב נגיש: ${a11y ? "כן" : "לא"}`);
+  return lines.join("\n");
 }
-const ratedKey = r => "mzp-rated-" + r.plate + (a11y ? "-acc" : "");
-function getRated(r){ try { return localStorage.getItem(ratedKey(r)); } catch(e) { return null; } }
+function openMail(kind, withRoom){
+  const subject = kind === "report" ? REPORT_SUBJECT
+    : `משוב ${kind === "up" ? "אהבתי" : "לא אהבתי"} · אפליקציית מצפן עבודה סוציאלית${withRoom && current ? " · חדר " + current.plate : ""}`;
+  const body = `${tr(MAIL_INTRO[kind])}\n\n\n\n----\n${mailContext(withRoom)}`;
+  location.href = `mailto:${REPORT_TO}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
 function msg(el, text, kind){ el.hidden = !text; el.textContent = text || ""; el.className = "fb-msg" + (kind ? " " + kind : ""); }
 function renderRate(){
-  const done = current && getRated(current);
-  $("rateUp").setAttribute("aria-pressed", done === "up"); $("rateDown").setAttribute("aria-pressed", done === "down");
-  $("rateUp").disabled = $("rateDown").disabled = !!done;
-  msg($("rateMsg"), done ? tr(UI.rateDone) : "");
+  $("rateUp").setAttribute("aria-pressed", "false"); $("rateDown").setAttribute("aria-pressed", "false");
+  msg($("rateMsg"), ""); msg($("copyMsg"), "");
 }
-function routeCtx(){
-  const rt = current && activeRoute(current);
-  return { room: current ? current.plate : "", step: rt ? `${stepIdx + 1}/${rt.steps.length}` : "", lang, accessible: a11y ? "yes" : "no" };
-}
-async function rate(v){
-  const r = current; if (!r || getRated(r)) return;
-  $("rateUp").disabled = $("rateDown").disabled = true;
-  try {
-    await sendFeedback(`משוב ${v === "up" ? "👍" : "👎"} · חדר ${r.plate}`, { type: "rating", rating: v === "up" ? "liked" : "disliked", ...routeCtx() });
-    try { localStorage.setItem(ratedKey(r), v); } catch(e) {}
-    $(v === "up" ? "rateUp" : "rateDown").setAttribute("aria-pressed", "true");
-    msg($("rateMsg"), tr(v === "up" ? UI.rateThx : UI.rateThxDown), "ok");
-  } catch(e) {
-    $("rateUp").disabled = $("rateDown").disabled = false;
-    msg($("rateMsg"), tr(e.message === "off" ? UI.sendOff : UI.sendErr), "err");
-  }
+function rate(v){
+  $(v === "up" ? "rateUp" : "rateDown").setAttribute("aria-pressed", "true");
+  msg($("rateMsg"), tr(UI.rateThx), "ok");
+  openMail(v, true);
 }
 $("rateUp").onclick = () => rate("up");
 $("rateDown").onclick = () => rate("down");
-
-let reportFrom = "viewHome", reportCtx = null;
-function openReport(withRoom){
-  reportFrom = currentView();
-  reportCtx = withRoom && current ? routeCtx() : null;
-  renderReportCtx();
-  $("repText").value = ""; $("repReply").value = ""; $("repBot").checked = false;
-  $("repKind").value = withRoom ? "route" : "other";
-  msg($("repMsg"), ""); $("repSend").disabled = false;
-  $("repCancel").textContent = tr(UI.repCancel);
-  show("viewReport"); $("repText").focus();
-}
-function renderReportCtx(){
-  if (reportCtx && current) {
-    const [i, n] = reportCtx.step ? reportCtx.step.split("/") : [];
-    $("repCtx").textContent = tr(i ? UI.ctxRoom(asT(titleOf(current)), i, n) : UI.ctxRoomNoStep(asT(titleOf(current))));
-  } else $("repCtx").textContent = tr(UI.ctxGeneral);
-}
-const asT = x => typeof x === "string" ? T(x, x, x) : x;
-function closeReport(){ if (reportFrom === "viewRoom" && current) { renderRoom(); show("viewRoom"); } else show("viewHome"); }
-$("reportRoom").onclick = () => openReport(true);
-$("reportGeneral").onclick = () => openReport(false);
-$("repCancel").onclick = closeReport;
-$("repForm").addEventListener("submit", async e => {
-  e.preventDefault();
-  if ($("repBot").checked) return;
-  const text = $("repText").value.trim();
-  if (text.length < 3) { msg($("repMsg"), tr(UI.repEmpty), "err"); $("repText").focus(); return; }
-  const kindLabel = $("repKind").selectedOptions[0].textContent;
-  $("repSend").disabled = true; msg($("repMsg"), tr(UI.repSending));
-  try {
-    const ctx = reportCtx || { lang, accessible: a11y ? "yes" : "no" };
-    await sendFeedback(`דיווח על טעות${ctx.room ? " · חדר " + ctx.room : ""} · ${kindLabel}`, {
-      type: "report", kind: $("repKind").value, message: text,
-      ...(($("repReply").value.trim()) ? { replyto: $("repReply").value.trim() } : {}), ...ctx });
-    msg($("repMsg"), tr(UI.repOk), "ok");
-    $("repText").value = ""; $("repReply").value = "";
-    $("repCancel").textContent = tr(UI.pBack);
-  } catch(err) {
-    $("repSend").disabled = false;
-    msg($("repMsg"), tr(err.message === "off" ? UI.sendOff : UI.sendErr), "err");
-  }
-});
+$("reportRoom").onclick = () => openMail("report", true);
+$("reportGeneral").onclick = () => openMail("report", false);
+$("copyMail").onclick = () => {
+  const done = ok => msg($("copyMsg"), tr(ok ? UI.copied : UI.copyFail), ok ? "ok" : "err");
+  try { navigator.clipboard.writeText(REPORT_TO).then(() => done(true), () => done(false)); } catch(e) { done(false); }
+};
 
 applyLang();
 show("viewHome");
