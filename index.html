@@ -120,6 +120,11 @@ textarea.field-in,select.field-in,input.field-in{width:100%;padding:12px;border-
 textarea.field-in{min-height:120px;resize:vertical}
 .ctx{font-size:.85rem;color:var(--muted);background:var(--bg);border-radius:8px;padding:8px 10px}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.backbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:6px;margin-block:-6px}
+.backbtn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--sign);color:var(--sign-fg);border:0;border-radius:999px;padding:11px 20px;font:600 1rem var(--body);cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.backbtn:hover{filter:brightness(1.1)}
+.backbtn:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+.backbtn-wide{width:100%;border-radius:12px;padding:14px}
 .disclaimer{border:1px solid var(--line);border-inline-start:4px solid var(--muted);background:var(--surface);border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:6px;font-size:.875rem;color:var(--muted)}
 .disclaimer h3{font-family:var(--body);font-weight:600;font-size:.9rem;color:var(--fg)}
 .disclaimer p:last-child{color:var(--fg);font-weight:500}
@@ -178,7 +183,7 @@ figure.door figcaption{font-size:.8rem;color:var(--muted)}
 
   <section id="viewRoom" hidden>
     <div style="display:flex;flex-direction:column;gap:16px">
-      <button class="linkbtn" id="back" type="button" style="align-self:flex-start" data-t="back"></button>
+      <div class="backbar"><button class="backbtn" id="back" type="button" data-t="back"></button></div>
       <div style="display:flex;align-items:center;gap:14px">
         <span class="plate" id="rPlate"></span>
         <div class="meta" style="min-width:0">
@@ -225,6 +230,7 @@ figure.door figcaption{font-size:.8rem;color:var(--muted)}
         <button type="button" class="linkbtn report-link" id="copyMail" data-t="copyMail"></button>
         <p class="fb-msg" id="copyMsg" aria-live="polite" hidden></p>
       </div>
+      <button class="backbtn backbtn-wide" id="back2" type="button" data-t="back"></button>
     </div>
   </section>
 
@@ -264,7 +270,7 @@ const UI = {
   filter:   T("סינון לפי בניין", "تصفية حسب المبنى", "Filter by building"),
   all:      T("הכול", "الكل", "All"),
   empty:    T("לא נמצא חדר. בדקו את המספר או נקו את הסינון.", "لم يتم العثور على غرفة. تحقّقوا من الرقم أو أزيلوا التصفية.", "No room found. Check the number or clear the filter."),
-  back:     T("→ חזרה לרשימה", "→ العودة إلى القائمة", "← Back to list"),
+  back:     T("→ חזרה לרשימת החדרים", "→ العودة إلى قائمة الغرف", "← Back to room list"),
   doorCap:  T("כך נראית הדלת של החדר", "هكذا يبدو باب الغرفة", "This is what the room's door looks like"),
   how:      T("איך מגיעים", "كيف تصلون", "How to get there"),
   prev:     T("הקודם", "السابق", "Back"),
@@ -628,7 +634,7 @@ function renderList(){
   $("emptyMsg").hidden = total > 0;
 }
 $("q").addEventListener("input", renderList);
-$("back").onclick = () => { current = null; show("viewHome"); };
+$("back").onclick = $("back2").onclick = () => { current = null; show("viewHome"); };
 
 function openRoom(r){ current = r; stepIdx = 0; renderRoom(); show("viewRoom"); }
 function renderRoom(){
