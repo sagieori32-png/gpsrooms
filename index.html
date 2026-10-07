@@ -319,8 +319,8 @@ try { const v = localStorage.getItem("mzp-lang"); if (["he","ar","en"].includes(
 const tr = x => typeof x === "string" ? x : (x[lang] ?? x.he);
 
 const UI = {
-  title:    T("מצפן עו״ס", "بوصلة العمل الاجتماعي", "SW Compass"),
-  subtitle: T("הדרך לכיתות בית הספר לעבודה סוציאלית, הר הצופים", "الطريق إلى غرف مدرسة العمل الاجتماعي، جبل المشارف", "Finding School of Social Work classrooms on Mount Scopus"),
+  title:    T("מצפן עו״ס", "بوصلة الخدمة الاجتماعية", "SW Compass"),
+  subtitle: T("הדרך לכיתות בית הספר לעבודה סוציאלית, הר הצופים", "الطريق إلى غرف كلية الخدمة الاجتماعية، جبل المشارف", "Finding School of Social Work classrooms on Mount Scopus"),
   privacy:  T("פרטיות", "الخصوصية", "Privacy"),
   note:     T("כלי עזר לא רשמי, לא של האוניברסיטה. מסלולי התמונות הם טיוטה ונבדקים בשטח.", "أداة مساعدة غير رسمية، ليست تابعة للجامعة. مسارات الصور مسودّة ويتم فحصها في الموقع.", "Unofficial helper tool, not run by the university. Photo routes are drafts still being checked on site."),
   qLabel:   T("לאיזה חדר את/ה צריך/ה להגיע?", "إلى أي غرفة تريدون الوصول؟", "Which room do you need to get to?"),
@@ -337,8 +337,8 @@ const UI = {
   draft:    T("טיוטת הוראות. התמונות צולמו בשטח; אנשים בתמונות טושטשו.", "تعليمات مسودّة. الصور التُقطت في الموقع، وتم تمويه الأشخاص الظاهرين فيها.", "Draft directions. Photos were taken on site; people in them are blurred."),
   pending:  T("הוראות ההגעה לחדר הזה עוד לא הוזנו.", "لم تتم إضافة تعليمات الوصول إلى هذه الغرفة بعد.", "Directions to this room haven't been added yet."),
   discH:    T("כלי עזר לא רשמי", "أداة مساعدة غير رسمية", "Unofficial helper tool"),
-  disc:     T("האפליקציה אינה שירות רשמי של האוניברסיטה העברית או של בית הספר לעבודה סוציאלית ולרווחה חברתית, ונועדה לעזור בלבד. ההוראות עלולות להשתנות בעקבות שיפוצים או סגירת כניסות.", "هذا التطبيق ليس خدمة رسمية للجامعة العبرية أو لمدرسة العمل الاجتماعي والرفاه الاجتماعي، وهو للمساعدة فقط. قد تتغير التعليمات بسبب أعمال ترميم أو إغلاق مداخل.", "This app is not an official service of the Hebrew University or of the School of Social Work and Social Welfare. It is meant only as a help. Directions may change because of renovations or closed entrances."),
-  discHelp: T("תמיד אפשר לפנות לעזרה במזכירות בית הספר לעבודה סוציאלית ולרווחה חברתית.", "يمكنكم دائمًا التوجه لطلب المساعدة من سكرتارية مدرسة العمل الاجتماعي والرفاه الاجتماعي.", "You can always ask for help at the office of the School of Social Work and Social Welfare."),
+  disc:     T("האפליקציה אינה שירות רשמי של האוניברסיטה העברית או של בית הספר לעבודה סוציאלית ולרווחה חברתית, ונועדה לעזור בלבד. ההוראות עלולות להשתנות בעקבות שיפוצים או סגירת כניסות.", "هذا التطبيق ليس خدمة رسمية للجامعة العبرية أو لكلية الخدمة الاجتماعية والرفاه الاجتماعي، وهو للمساعدة فقط. قد تتغير التعليمات بسبب أعمال ترميم أو إغلاق مداخل.", "This app is not an official service of the Hebrew University or of the School of Social Work and Social Welfare. It is meant only as a help. Directions may change because of renovations or closed entrances."),
+  discHelp: T("תמיד אפשר לפנות לעזרה במזכירות בית הספר לעבודה סוציאלית ולרווחה חברתית.", "يمكنكم دائمًا التوجه لطلب المساعدة من سكرتارية كلية الخدمة الاجتماعية والرفاه الاجتماعي.", "You can always ask for help at the office of the School of Social Work and Social Welfare."),
   pTitle:   T("מדיניות פרטיות", "سياسة الخصوصية", "Privacy policy"),
   pDraft:   T("טיוטה. יש להשלים את פרטי המפעיל לפני הפצה.", "مسودّة. يجب إكمال تفاصيل الجهة المشغّلة قبل النشر.", "Draft. Operator details must be completed before release."),
   pCollH:   T("איזה מידע נאסף", "ما المعلومات التي تُجمع", "What information is collected"),
@@ -348,7 +348,7 @@ const UI = {
   pDevH:    T("מה נשמר במכשיר", "ما الذي يُحفظ على الجهاز", "What is saved on your device"),
   pDev:     T("רק העדפות התצוגה: שפה, מצב נגיש, גודל טקסט, ניגודיות והקראה, כדי שהאפליקציה תיפתח כמו שהשארת אותה. אין עוגיות ואין נתונים אחרים.", "فقط تفضيلات العرض: اللغة، الوضع المتاح، حجم النص، التباين والقراءة، ليفتح التطبيق كما تركتموه. لا توجد ملفات تعريف ارتباط ولا بيانات أخرى.", "Only your display preferences: language, step-free mode, text size, contrast and reading aloud, so the app opens the way you left it. No cookies and no other data."),
   pOpH:     T("מי מפעיל את האפליקציה", "من يشغّل التطبيق", "Who runs the app"),
-  pOp:      T("[שם המפעיל ודרך יצירת קשר — להשלמה]. האפליקציה היא כלי עזר לא רשמי. היא אינה שירות של האוניברסיטה העברית או של בית הספר לעבודה סוציאלית ולרווחה חברתית, ואינה מייצגת אותם. לעזרה אפשר תמיד לפנות למזכירות בית הספר.", "[اسم الجهة المشغّلة ووسيلة التواصل — للإكمال]. التطبيق أداة مساعدة غير رسمية. ليس خدمة للجامعة العبرية أو لمدرسة العمل الاجتماعي والرفاه الاجتماعي، ولا يمثّلهما. للمساعدة يمكن دائمًا التوجه إلى سكرتارية المدرسة.", "[Operator name and contact — to be completed]. The app is an unofficial helper tool. It is not a service of, and does not represent, the Hebrew University or the School of Social Work and Social Welfare. For help, you can always contact the school office."),
+  pOp:      T("[שם המפעיל ודרך יצירת קשר — להשלמה]. האפליקציה היא כלי עזר לא רשמי. היא אינה שירות של האוניברסיטה העברית או של בית הספר לעבודה סוציאלית ולרווחה חברתית, ואינה מייצגת אותם. לעזרה אפשר תמיד לפנות למזכירות בית הספר.", "[اسم الجهة المشغّلة ووسيلة التواصل — للإكمال]. التطبيق أداة مساعدة غير رسمية. ليس خدمة للجامعة العبرية أو لكلية الخدمة الاجتماعية والرفاه الاجتماعي، ولا يمثّلهما. للمساعدة يمكن دائمًا التوجه إلى سكرتارية الكلية.", "[Operator name and contact — to be completed]. The app is an unofficial helper tool. It is not a service of, and does not represent, the Hebrew University or the School of Social Work and Social Welfare. For help, you can always contact the school office."),
   pBack:    T("חזרה", "رجوع", "Back"),
   dispBtn:  T("תצוגה", "العرض", "Display"),
   dispTitle:T("תצוגה ונגישות", "العرض وإمكانية الوصول", "Display and accessibility"),
@@ -366,7 +366,7 @@ const UI = {
   aToolsH:  T("כלי תצוגה", "أدوات العرض", "Display tools"),
   aTools:   T("בכפתור \"תצוגה\" בראש המסך אפשר להגדיל את הטקסט, להפעיל ניגודיות גבוהה ולהפעיל הקראה של צעדי המסלול. ההקראה משתמשת בקול של הטלפון.", "في زر \"العرض\" أعلى الشاشة يمكن تكبير النص، وتفعيل التباين العالي، وتفعيل قراءة خطوات المسار. تستخدم القراءة صوت الهاتف.", "The \"Display\" button at the top lets you enlarge text, turn on high contrast and have route steps read aloud. Reading aloud uses your phone's voice."),
   aLimitH:  T("מגבלות ידועות", "قيود معروفة", "Known limitations"),
-  aLimit:   T("ההכוונה מבוססת על תמונות, ולכן היא שימושית פחות לאנשים עיוורים. ההוראות הכתובות וההקראה נועדו לעזור, אבל לא מחליפות ליווי. איכות ההקראה בעברית ובערבית תלויה בקולות שמותקנים בטלפון. כאמור, זהו כלי עזר לא רשמי, ותמיד אפשר לפנות לעזרה במזכירות בית הספר.", "الإرشاد مبني على الصور، لذا فهو أقل فائدة للمكفوفين. التعليمات المكتوبة والقراءة تساعد لكنها لا تغني عن المرافقة. جودة القراءة بالعبرية والعربية تعتمد على الأصوات المثبتة في الهاتف. وكما ذُكر، هذه أداة مساعدة غير رسمية، ويمكن دائمًا التوجه لطلب المساعدة من سكرتارية المدرسة.", "Directions are photo-based, so they are less useful for blind users. Written directions and reading aloud help but don't replace someone accompanying you. Reading quality in Hebrew and Arabic depends on the voices installed on your phone. As noted, this is an unofficial helper tool, and you can always ask for help at the school office."),
+  aLimit:   T("ההכוונה מבוססת על תמונות, ולכן היא שימושית פחות לאנשים עיוורים. ההוראות הכתובות וההקראה נועדו לעזור, אבל לא מחליפות ליווי. איכות ההקראה בעברית ובערבית תלויה בקולות שמותקנים בטלפון. כאמור, זהו כלי עזר לא רשמי, ותמיד אפשר לפנות לעזרה במזכירות בית הספר.", "الإرشاد مبني على الصور، لذا فهو أقل فائدة للمكفوفين. التعليمات المكتوبة والقراءة تساعد لكنها لا تغني عن المرافقة. جودة القراءة بالعبرية والعربية تعتمد على الأصوات المثبتة في الهاتف. وكما ذُكر، هذه أداة مساعدة غير رسمية، ويمكن دائمًا التوجه لطلب المساعدة من سكرتارية الكلية.", "Directions are photo-based, so they are less useful for blind users. Written directions and reading aloud help but don't replace someone accompanying you. Reading quality in Hebrew and Arabic depends on the voices installed on your phone. As noted, this is an unofficial helper tool, and you can always ask for help at the school office."),
   aContactH:T("נתקלתם בבעיית נגישות?", "واجهتم مشكلة في إمكانية الوصول؟", "Found an accessibility problem?"),
   aContact: T("דווחו לנו דרך הקישור \"מצאתם טעות? דווחו לנו\" בתחתית המסך, ובחרו \"בעיית נגישות\". נשתדל לתקן מהר.", "أخبرونا عبر رابط \"وجدتم خطأً؟ أخبرونا\" أسفل الشاشة. سنحاول الإصلاح بسرعة.", "Tell us using the \"Found a mistake? Tell us\" link at the bottom of the screen. We'll try to fix it quickly."),
   noPhoto:  T("תמונה לצעד הזה תתווסף בקרוב", "ستُضاف صورة لهذه الخطوة قريبًا", "A photo for this step is coming soon"),
@@ -379,7 +379,7 @@ const UI = {
   mailHint: T("הלחיצה פותחת מייל באפליקציית המייל שלך, עם הנושא ופרטי המסלול כבר בפנים. כותבים מה קרה ושולחים.", "الضغط يفتح بريدًا في تطبيق البريد لديكم، مع الموضوع وتفاصيل المسار. اكتبوا ما حدث وأرسلوا.", "This opens an email in your mail app with the subject and route details filled in. Write what happened and send."),
   copyMail: T("לא נפתח מייל? העתקת כתובת הדיווח", "لم يُفتح البريد؟ نسخ عنوان الإبلاغ", "No email opened? Copy the report address"),
   copied:   T("הכתובת הועתקה. אפשר להדביק אותה במייל חדש.", "تم نسخ العنوان. يمكن لصقه في بريد جديد.", "Address copied. Paste it into a new email."),
-  copyFail: T("לא הצלחנו להעתיק. אפשר לפנות למזכירות בית הספר.", "لم نتمكن من النسخ. يمكن التوجه إلى سكرتارية المدرسة.", "Couldn't copy. You can contact the school office."),
+  copyFail: T("לא הצלחנו להעתיק. אפשר לפנות למזכירות בית הספר.", "لم نتمكن من النسخ. يمكن التوجه إلى سكرتارية الكلية.", "Couldn't copy. You can contact the school office."),
   a11yBtn:  T("מסלול נגיש (בלי מדרגות)", "مسار متاح (بدون درج)", "Step-free route"),
   a11yOn:   T("מצב נגיש פועל: מוצגים רק מסלולים בלי מדרגות, למשל לכיסא גלגלים או לעגלת תינוק.", "وضع الإتاحة مُفعّل: تُعرض فقط مسارات بدون درج، مثلاً لكرسي متحرك أو عربة أطفال.", "Step-free mode is on: only routes without stairs are shown, e.g. for a wheelchair or a stroller."),
   accOk:    T("♿ מסלול נגיש", "♿ مسار متاح", "♿ Step-free route"),
@@ -401,8 +401,8 @@ const UI = {
 /* ===== בניינים וחדרים ===== */
 const DATA = {
   areas: [
-    {id:"sw",    name:T("עבודה סוציאלית","العمل الاجتماعي","Social Work")},
-    {id:"lib",   name:T("ספריית עו״ס וחינוך","مكتبة العمل الاجتماعي والتربية","Social Work & Education Library")},
+    {id:"sw",    name:T("עבודה סוציאלית","الخدمة الاجتماعية","Social Work")},
+    {id:"lib",   name:T("ספריית עו״ס וחינוך","مكتبة الخدمة الاجتماعية والتربية","Social Work & Education Library")},
     {id:"soc4",  name:T("מדעי החברה, גוש 4","العلوم الاجتماعية، كتلة 4","Social Sciences, Block 4"), note:T("בסוף מדעי החברה","في نهاية العلوم الاجتماعية","At the far end of Social Sciences")},
     {id:"hum42", name:T("מדעי הרוח, בניין 42, גוש 2","العلوم الإنسانية، مبنى 42، كتلة 2","Humanities, Building 42, Block 2"), note:T("גוש 2, קומה 5","كتلة 2، طابق 5","Block 2, Floor 5")},
     {id:"buber", name:T("בובר","بوبر","Buber")}
@@ -416,7 +416,7 @@ const DATA = {
     {plate:"422", floor:"4", area:"sw", label:T("חדר ישיבות קטן","غرفة اجتماعات صغيرة","Small meeting room"), alias:"ישיבות meeting اجتماعات"},
     {plate:"428", floor:"4", area:"sw"}, {plate:"520", floor:"5", area:"sw"}, {plate:"528", floor:"5", area:"sw"},
     {plate:"600", floor:"6", area:"sw"}, {plate:"602", floor:"6", area:"sw"}, {plate:"603", floor:"6", photo:"img/b52/d603.jpg", area:"sw"},
-    {plate:"399", bldg:"52", photo:"img/399.jpg", area:"lib", label:T("ספריית עו״ס וחינוך","مكتبة العمل الاجتماعي والتربية","Social Work & Education Library"), alias:"ספרייה ספריה library مكتبة",
+    {plate:"399", bldg:"52", photo:"img/399.jpg", area:"lib", label:T("ספריית עו״ס וחינוך","مكتبة الخدمة الاجتماعية والتربية","Social Work & Education Library"), alias:"ספרייה ספריה library مكتبة",
       tip:T("בגלל השיפוץ אין כרגע כניסה דרך הספרייה. נכנסים מהדלת החיצונית, כמו בתמונות.","بسبب أعمال الترميم لا يوجد حاليًا دخول عبر المكتبة. ادخلوا من الباب الخارجي، كما في الصور.","Because of renovations, there is currently no entry through the library. Use the outside door, as shown in the photos.")},
     {plate:"24-301", floor:"3", area:"soc4"}, {plate:"24-302", floor:"3", area:"soc4"},
     {plate:"42505", floor:"5", area:"hum42"}, {plate:"42506", floor:"5", area:"hum42"},
@@ -430,7 +430,7 @@ const DONE = T(" הגעת!", " وصلتم!", " You've arrived!");
 const A = (img, he, ar, en) => ({img, text:T(he+DONE.he, ar+DONE.ar, en+DONE.en)});
 
 const FROM = {
-  sw:    T("הכניסה לבית הספר לעבודה סוציאלית","مدخل مدرسة العمل الاجتماعي","the School of Social Work entrance"),
+  sw:    T("הכניסה לבית הספר לעבודה סוציאלית","مدخل كلية الخدمة الاجتماعية","the School of Social Work entrance"),
   lifts: T("המעליות של בניינים 52–53 (קומה 3)","مصاعد المبنيين 52–53 (الطابق 3)","the Building 52–53 elevators (Floor 3)"),
   forum: T("רחבת הפורום","ساحة الفوروم","the Forum plaza"),
   cafe:  T("שולחנות הקפטריה","طاولات الكافتيريا","the cafeteria tables")
@@ -439,7 +439,7 @@ const FROM = {
 const STEP = {
   lobby: S("img/r283/1.jpg",
     "מתחילים בלובי של בית הספר לעבודה סוציאלית, מול הקיר עם שם בית הספר והעציצים.",
-    "ابدأوا في ردهة مدرسة العمل الاجتماعي، مقابل الجدار الذي عليه اسم المدرسة والنباتات.",
+    "ابدأوا في ردهة كلية الخدمة الاجتماعية، مقابل الجدار الذي عليه اسم الكلية والنباتات.",
     "Start in the School of Social Work lobby, facing the wall with the school's name and the plants."),
   cafe: S("img/r283/2.jpg",
     "הולכים לכיוון קפה הפורום וממשיכים ישר לפי השלט \"בית הספר לחינוך\". הקפה נשאר מימין.",
@@ -456,12 +456,12 @@ const STEP = {
   stairs: S("img/r283/5.jpg", "יורדים במדרגות עד הסוף. לא יוצאים בקומת הביניים, שבה נמצאים החדרים של ריפוי בעיסוק.", "انزلوا الدرج حتى النهاية. لا تخرجوا في الطابق الأوسط حيث غرف العلاج الوظيفي.", "Go all the way down the stairs. Do not get off at the middle floor, where the Occupational Therapy rooms are."),
   junction: S("img/rt/junction.jpg",
     "מגיעים לרחבה שבה הפתח של מתחם אוסטרליה (מימין). לא נכנסים אליו: פונים למסדרון משמאל, לפי השלט \"הספרייה לחינוך ולעבודה סוציאלית · מכון חרוב\".",
-    "تصلون إلى ساحة فيها مدخل مجمّع أستراليا (على اليمين). لا تدخلوا إليه: انعطفوا إلى الممر على اليسار، حسب لافتة \"مكتبة التربية والعمل الاجتماعي · معهد حاروف\".",
+    "تصلون إلى ساحة فيها مدخل مجمّع أستراليا (على اليمين). لا تدخلوا إليه: انعطفوا إلى الممر على اليسار، حسب لافتة \"مكتبة التربية والخدمة الاجتماعية · معهد حاروف\".",
     "You reach an open area with the Australian Complex opening on the right. Don't go in: turn into the corridor on the left, following the sign \"Education and Social Work Library · Haruv Institute\"."),
   corr: S("img/rt/corr359.jpg", "הולכים לאורך המסדרון, קיר האבן מימין.", "امشوا على طول الممر، والجدار الحجري على يمينكم.", "Walk along the corridor with the stone wall on your right."),
   tolib: S("img/rt/tolib.jpg",
     "ממשיכים דרך הפתח הרחב לכיוון הספרייה לחינוך ולעבודה סוציאלית.",
-    "استمروا عبر الفتحة الواسعة باتجاه مكتبة التربية والعمل الاجتماعي.",
+    "استمروا عبر الفتحة الواسعة باتجاه مكتبة التربية والخدمة الاجتماعية.",
     "Continue through the wide opening toward the Education and Social Work Library."),
   aus399: S("img/rt/aus399.jpg",
     "נכנסים בפתח של מתחם אוסטרליה. לא יורדים במדרגות: הדלת של 399 ממש מולך.",
@@ -469,7 +469,7 @@ const STEP = {
     "Go in through the Australian Complex opening. Don't go down the stairs: the door of 399 is right in front of you."),
   down: S("img/b52/stairsdown.jpg",
     "מהכניסה הראשית של בית הספר יורדים במדרגות קומה אחת.",
-    "من المدخل الرئيسي للمدرسة انزلوا طابقًا واحدًا بالدرج.",
+    "من المدخل الرئيسي للكلية انزلوا طابقًا واحدًا بالدرج.",
     "From the school's main entrance, go down one floor by the stairs."),
   corr220: S("img/b52/corr220.jpg",
     "בתחתית המדרגות פונים שמאלה וממשיכים במסדרון עם תמונות הנוף על הקירות.",
@@ -477,7 +477,7 @@ const STEP = {
     "At the bottom of the stairs, turn left and continue along the corridor with landscape pictures on the walls."),
   lifts: S("img/b52/lifts.jpg",
     "מגיעים למעליות של בניינים 52–53 בקומה 3. השלט משמאל מפרט את חדרי בית הספר לעבודה סוציאלית לפי קומה.",
-    "تصلون إلى مصاعد المبنيين 52–53 في الطابق 3. اللافتة على اليسار تعرض غرف مدرسة العمل الاجتماعي حسب الطابق.",
+    "تصلون إلى مصاعد المبنيين 52–53 في الطابق 3. اللافتة على اليسار تعرض غرف كلية الخدمة الاجتماعية حسب الطابق.",
     "Reach the Building 52–53 elevators on Floor 3. The sign on the left lists the School of Social Work rooms by floor."),
   panel: f => S("img/b52/panel.jpg", `נכנסים למעלית ולוחצים על קומה ${f}.`, `ادخلوا المصعد واضغطوا على الطابق ${f}.`, `Get in the elevator and press ${f}.`),
   f4: S("img/b52/f4corr.jpg",
@@ -514,18 +514,18 @@ const R24 = [
 ];
 const R42 = [
   STEP.lobby,
-  S("img/b2/h_2_seating.jpg", "מהכניסה לבית הספר הולכים לשולחנות של בית הקפה \"ויטמין\". משם ממשיכים לכיוון השלט \"הפקולטה למדעי הרוח\".", "من مدخل المدرسة امشوا إلى طاولات مقهى \"فيتامين\". ومن هناك استمروا باتجاه لافتة \"كلية العلوم الإنسانية\".", "From the school entrance, walk to the tables of the \"Vitamin\" café. From there, head toward the \"Faculty of Humanities\" sign."),
+  S("img/b2/h_2_seating.jpg", "מהכניסה לבית הספר הולכים לשולחנות של בית הקפה \"ויטמין\". משם ממשיכים לכיוון השלט \"הפקולטה למדעי הרוח\".", "من مدخل الكلية امشوا إلى طاولات مقهى \"فيتامين\". ومن هناك استمروا باتجاه لافتة \"كلية العلوم الإنسانية\".", "From the school entrance, walk to the tables of the \"Vitamin\" café. From there, head toward the \"Faculty of Humanities\" sign."),
   S("img/b2/h_3_rotunda.jpg", "עוברים מתחת לשלט \"הפקולטה למדעי הרוח\".", "مرّوا تحت لافتة \"كلية العلوم الإنسانية\".", "Walk under the \"Faculty of Humanities\" sign."),
   S("img/b2/h_5_464544.jpg", "הולכים במסדרון של הפקולטה, עם המספר 46 על הקיר, וממשיכים ישר.", "امشوا في ممر الكلية، حيث الرقم 46 على الجدار، واستمروا مباشرة.", "Walk down the faculty corridor with the number 46 on the wall, and keep straight."),
   S("img/b2/h_6_stairs42.jpg", "מגיעים לבניין 42 (המספר הגדול על הקיר) ועולים במדרגות.", "تصلون إلى مبنى 42 (الرقم الكبير على الجدار) واصعدوا الدرج.", "Reach Building 42 (the big number on the wall) and go up the stairs."),
-  S("img/b2/h_7_sign5200.jpg", "ממשיכים לעלות לפי החץ בשלט \"עבודה סוציאלית · חדרי סמינר 42505 | 42506\".", "استمروا بالصعود حسب السهم في لافتة \"العمل الاجتماعي · غرف سيمينار 42505 | 42506\".", "Keep climbing, following the arrow on the sign \"Social Work · Seminar rooms 42505 | 42506\".")
+  S("img/b2/h_7_sign5200.jpg", "ממשיכים לעלות לפי החץ בשלט \"עבודה סוציאלית · חדרי סמינר 42505 | 42506\".", "استمروا بالصعود حسب السهم في لافتة \"الخدمة الاجتماعية · غرف سيمينار 42505 | 42506\".", "Keep climbing, following the arrow on the sign \"Social Work · Seminar rooms 42505 | 42506\".")
 ];
 
 const ROUTES = {
   "283": {from:FROM.sw, steps:[...common, STEP.aus, STEP.stairs, A("img/r283/6.jpg","אולם 283 לפניך.","القاعة 283 أمامكم.","Hall 283 is in front of you.")]},
   "359": {from:FROM.sw, steps:[...common, STEP.junction, STEP.corr, A("img/rt/d359.jpg","הדלת הירוקה עם שלט \"יציאה\" מעליה היא חדר 359.","الباب الأخضر الذي فوقه لافتة \"خروج\" هو الغرفة 359.","The green door with the \"Exit\" sign above it is room 359.")]},
   "365": {from:FROM.sw, steps:[...common, STEP.junction, STEP.corr, STEP.tolib, A("img/rt/d365.jpg","אולם 365, אולם חרוב.","القاعة 365، قاعة حاروف.","Room 365, Haruv Hall.")]},
-  "399": {from:FROM.sw, steps:[...common, STEP.aus399, A("img/399.jpg","חדר 399, ספריית עו״ס.","الغرفة 399، مكتبة العمل الاجتماعي.","Room 399, Social Work Library.")]},
+  "399": {from:FROM.sw, steps:[...common, STEP.aus399, A("img/399.jpg","חדר 399, ספריית עו״ס.","الغرفة 399، مكتبة الخدمة الاجتماعية.","Room 399, Social Work Library.")]},
   "220": {from:FROM.sw, steps:[STEP.lobby, STEP.down, A("img/b52/d220.jpg","בתחתית המדרגות פונים ימינה. הדלת האדומה, ליד ארון הכיבוי, היא כיתה 220.","في أسفل الدرج انعطفوا يمينًا. الباب الأحمر بجانب خزانة الإطفاء هو الغرفة 220.","At the bottom of the stairs, turn right. The red door next to the fire cabinet is room 220.")]},
   "224": {from:FROM.sw, steps:[STEP.lobby, STEP.down, STEP.corr220, A("img/b52/d224.jpg","הדלת האדומה עם השלט 224, צמודה לחדר 223.","الباب الأحمر الذي عليه لافتة 224، بجانب الغرفة 223.","The red door with the 224 sign, next to room 223.")]},
   "420": {from:FROM.lifts, steps:viaLift(4, STEP.f4, A("img/b52/d420.jpg","חדר 420 משמאל (ליד הכיסאות הכחולים).","الغرفة 420 على اليسار (بجانب الكراسي الزرقاء).","Room 420 is on the left, by the blue chairs."))},
@@ -569,7 +569,7 @@ const ACC_F2 = [
   STEP.panel(2),
   S("img/acc2/ot.jpg", "יוצאים מהמעלית בקומה 2 ונכנסים בדלתות הפתוחות של \"בית הספר לריפוי בעיסוק · 52\".", "اخرجوا من المصعد في الطابق 2 وادخلوا من الأبواب المفتوحة لـ\"قسم العلاج الوظيفي · 52\".", "Leave the elevator on Floor 2 and go through the open doors of the \"School of Occupational Therapy · 52\"."),
   S("img/acc2/c204.jpg", "ממשיכים ישר במסדרון, לאורך החדרים 204 ואילך.", "استمروا مباشرة في الممر، بمحاذاة الغرف 204 وما بعدها.", "Keep straight down the corridor, past room 204 and onward."),
-  S("img/acc2/s209.jpg", "מגיעים לשלט \"ביה״ס לעבודה סוציאלית · קומה 2\" ליד הדלת האדומה 209.", "تصلون إلى لافتة \"مدرسة العمل الاجتماعي · طابق 2\" بجانب الباب الأحمر 209.", "Reach the \"School of Social Work · Floor 2\" sign next to red door 209."),
+  S("img/acc2/s209.jpg", "מגיעים לשלט \"ביה״ס לעבודה סוציאלית · קומה 2\" ליד הדלת האדומה 209.", "تصلون إلى لافتة \"كلية الخدمة الاجتماعية · طابق 2\" بجانب الباب الأحمر 209.", "Reach the \"School of Social Work · Floor 2\" sign next to red door 209."),
   S("img/acc2/cpics.jpg", "ממשיכים במסדרון עם תמונות הנוף על הקירות.", "استمروا في الممر الذي على جدرانه صور مناظر طبيعية.", "Continue along the corridor with landscape pictures on the walls."),
   S("img/acc2/open.jpg", "מגיעים לרחבה עם תמונות הנוף. מכאן מחפשים את מספר החדר ליד הדלתות האדומות.", "تصلون إلى الساحة ذات صور المناظر. من هنا ابحثوا عن رقم الغرفة بجانب الأبواب الحمراء.", "Reach the open area with the landscape pictures. From here, look for the room number by the red doors.")
 ];
@@ -645,7 +645,7 @@ function applyLang(){
   const app = $("app"), dir = lang === "en" ? "ltr" : "rtl";
   app.lang = lang; app.dir = dir;
   document.documentElement.lang = lang; document.documentElement.dir = dir;
-  document.title = tr(T("מצפן עו״ס הר הצופים","بوصلة العمل الاجتماعي – جبل المشارف","SW Compass – Mount Scopus"));
+  document.title = tr(T("מצפן עו״ס הר הצופים","بوصلة الخدمة الاجتماعية – جبل المشارف","SW Compass – Mount Scopus"));
   document.querySelectorAll("[data-t]").forEach(el => el.textContent = tr(UI[el.dataset.t]));
   $("q").placeholder = tr(UI.qPh);
   $("chips").setAttribute("aria-label", tr(UI.filter));
