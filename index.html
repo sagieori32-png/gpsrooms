@@ -37,7 +37,7 @@
 .acc-on{border-inline-start:4px solid var(--sign);background:var(--surface);border-radius:8px;padding:8px 12px;font-size:.9rem}
 .badge-acc{font-weight:600;color:var(--ok)}
 .badge-noacc{color:var(--warn)}
-body{background:var(--bg);color:var(--fg);font:16px/1.6 var(--body)}
+body{background:var(--bg);color:var(--fg);font:1rem/1.6 var(--body)}
 .wrap:lang(ar){font-family:"IBM Plex Sans Arabic","Segoe UI",Arial,sans-serif}
 .wrap:lang(ar) h1,.wrap:lang(ar) h2,.wrap:lang(ar) h3{font-family:"IBM Plex Sans Arabic",Arial,sans-serif;font-weight:600}
 .top-tools{display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex:none}
@@ -139,6 +139,31 @@ figure.door{margin:0;display:flex;flex-direction:column;gap:6px}
 figure.door img{display:block;width:100%;max-width:100%;max-height:420px;object-fit:cover;border-radius:12px;border:1px solid var(--line);background:var(--surface)}
 figure.door figcaption{font-size:.8rem;color:var(--muted)}
 @media (prefers-reduced-motion:no-preference){.btn,.room,.chip{transition:background-color .15s,border-color .15s}}
+.dispbtn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:999px;padding:5px 12px;font:600 .8rem var(--body);cursor:pointer}
+.dispbtn svg{width:16px;height:16px}
+.dispbtn[aria-expanded="true"]{background:var(--sign);color:var(--sign-fg);border-color:var(--sign)}
+.disp{display:flex;flex-direction:column;gap:12px}
+.disp h3{font-size:1rem}
+.seg{display:flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.seg button{flex:1;border:0;background:var(--surface);color:var(--fg);padding:10px;font:600 1rem var(--body);cursor:pointer}
+.seg button+button{border-inline-start:1px solid var(--line)}
+.seg button[aria-pressed="true"]{background:var(--sign);color:var(--sign-fg)}
+.toggle{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:10px;padding:10px 12px;font:600 .95rem var(--body);cursor:pointer;text-align:start}
+.toggle .sw{width:42px;height:24px;border-radius:12px;background:var(--line);position:relative;flex:none}
+.toggle .sw::after{content:"";position:absolute;top:3px;inset-inline-start:3px;width:18px;height:18px;border-radius:50%;background:var(--surface)}
+.toggle[aria-pressed="true"] .sw{background:var(--sign)}
+.toggle[aria-pressed="true"] .sw::after{inset-inline-start:21px}
+.speak{align-self:flex-start;display:inline-flex;align-items:center;gap:6px}
+.speak svg{width:18px;height:18px}
+.seg button:focus-visible,.toggle:focus-visible,.dispbtn:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+/* ניגודיות גבוהה: גובר על בהיר וכהה */
+html:root[data-contrast="high"]{--bg:#ffffff;--surface:#ffffff;--fg:#000000;--muted:#000000;--line:#000000;--sign:#000000;--sign-fg:#ffffff;--amber:#ffd400;--amber-ink:#000000;--ok:#005a1f;--warn:#7a3b00;color-scheme:light}
+html:root[data-contrast="high"] .panel,html:root[data-contrast="high"] .room,html:root[data-contrast="high"] .chip,html:root[data-contrast="high"] .search,html:root[data-contrast="high"] .disclaimer{border-width:2px}
+html:root[data-contrast="high"] .linkbtn{color:#000;font-weight:700}
+html:root[data-contrast="high"] .note{border:2px solid #000}
+html:root[data-contrast="high"] .toggle .sw{background:#fff;border:2px solid #000}
+html:root[data-contrast="high"] .toggle .sw::after{background:#000;top:1px}
+html:root[data-contrast="high"] .toggle[aria-pressed="true"] .sw{background:#ffd400}
 </style>
 </head>
 <body>
@@ -159,9 +184,28 @@ figure.door figcaption{font-size:.8rem;color:var(--muted)}
         <button type="button" class="lang" data-lang="ar" lang="ar">ع</button>
         <button type="button" class="lang" data-lang="en" lang="en">EN</button>
       </div>
+      <button type="button" class="dispbtn" id="dispBtn" aria-expanded="false" aria-controls="dispPanel">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l5-14 5 14"/><path d="M5.8 15h6.4"/><path d="M15 20l3-8 3 8"/><path d="M16 17.5h4"/></svg>
+        <span data-t="dispBtn"></span></button>
       <button class="linkbtn" id="toPrivacy" type="button" data-t="privacy"></button>
     </div>
   </header>
+
+  <section class="panel disp" id="dispPanel" hidden aria-labelledby="dispH">
+    <h3 id="dispH" data-t="dispTitle"></h3>
+    <div>
+      <p class="small muted" id="fsLabel" data-t="fsLabel"></p>
+      <div class="seg" role="group" aria-labelledby="fsLabel">
+        <button type="button" dir="ltr" data-fs="1" style="font-size:1rem">A</button>
+        <button type="button" dir="ltr" data-fs="2" style="font-size:1.2rem">A+</button>
+        <button type="button" dir="ltr" data-fs="3" style="font-size:1.4rem">A++</button>
+      </div>
+    </div>
+    <button type="button" class="toggle" id="contrastBtn" aria-pressed="false"><span data-t="contrast"></span><span class="sw" aria-hidden="true"></span></button>
+    <button type="button" class="toggle" id="autoReadBtn" aria-pressed="false"><span data-t="autoRead"></span><span class="sw" aria-hidden="true"></span></button>
+    <p class="small muted" id="noSpeech" hidden data-t="noSpeech"></p>
+    <button type="button" class="linkbtn" id="toAccess" style="align-self:flex-start" data-t="accStmt"></button>
+  </section>
 
   <p class="note" data-t="note"></p>
 
@@ -204,6 +248,9 @@ figure.door figcaption{font-size:.8rem;color:var(--muted)}
           <img class="st-img" id="stImg" alt="">
           <div class="photo st-img" id="stNoImg" hidden data-t="noPhoto"></div>
           <p class="st-text" id="stText" aria-live="polite"></p>
+          <button type="button" class="btn btn-ghost speak" id="speakBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>
+            <span data-t="speak"></span></button>
           <div class="row">
             <button class="btn btn-ghost" id="stPrev" type="button" data-t="prev"></button>
             <button class="btn btn-primary" id="stNext" type="button"></button>
@@ -235,6 +282,16 @@ figure.door figcaption{font-size:.8rem;color:var(--muted)}
   </section>
 
 
+  <section id="viewAccess" class="panel" aria-labelledby="accH" hidden>
+    <h2 id="accH" data-t="aTitle"></h2>
+    <p class="muted small" data-t="aDate"></p>
+    <h3 data-t="aDoneH"></h3><p data-t="aDone"></p>
+    <h3 data-t="aToolsH"></h3><p data-t="aTools"></p>
+    <h3 data-t="aLimitH"></h3><p data-t="aLimit"></p>
+    <h3 data-t="aContactH"></h3><p data-t="aContact"></p>
+    <button class="btn btn-primary" id="accBack" type="button" data-t="pBack"></button>
+  </section>
+
   <section id="viewPrivacy" class="panel" aria-labelledby="privH" hidden>
     <h2 id="privH" data-t="pTitle"></h2>
     <p class="muted small" data-t="pDraft"></p>
@@ -250,6 +307,7 @@ figure.door figcaption{font-size:.8rem;color:var(--muted)}
     <p data-t="disc"></p>
     <p data-t="discHelp"></p>
     <button type="button" class="linkbtn report-link" id="reportGeneral" data-t="reportGeneral"></button>
+    <button type="button" class="linkbtn report-link" id="toAccess2" data-t="accStmt"></button>
   </aside>
 </div>
 
@@ -288,10 +346,29 @@ const UI = {
   pLocH:    T("מיקום", "الموقع", "Location"),
   pLoc:     T("האפליקציה לא משתמשת במיקום שלך ולא מבקשת גישה אליו. ההוראות מבוססות על תמונות מהשטח בלבד.", "التطبيق لا يستخدم موقعكم ولا يطلب الوصول إليه. التعليمات مبنية على صور من الموقع فقط.", "The app doesn't use your location or ask for access to it. Directions are based only on photos taken on site."),
   pDevH:    T("מה נשמר במכשיר", "ما الذي يُحفظ على الجهاز", "What is saved on your device"),
-  pDev:     T("רק בחירת השפה והאם מצב הנגישות פועל, כדי שהאפליקציה תיפתח כמו שהשארת אותה. אין עוגיות ואין נתונים אחרים.", "فقط اختيار اللغة وما إذا كان وضع الإتاحة مُفعّلاً، ليفتح التطبيق كما تركتموه. لا توجد ملفات تعريف ارتباط ولا بيانات أخرى.", "Only your language choice and whether step-free mode is on, so the app opens the way you left it. No cookies and no other data."),
+  pDev:     T("רק העדפות התצוגה: שפה, מצב נגיש, גודל טקסט, ניגודיות והקראה, כדי שהאפליקציה תיפתח כמו שהשארת אותה. אין עוגיות ואין נתונים אחרים.", "فقط تفضيلات العرض: اللغة، الوضع المتاح، حجم النص، التباين والقراءة، ليفتح التطبيق كما تركتموه. لا توجد ملفات تعريف ارتباط ولا بيانات أخرى.", "Only your display preferences: language, step-free mode, text size, contrast and reading aloud, so the app opens the way you left it. No cookies and no other data."),
   pOpH:     T("מי מפעיל את האפליקציה", "من يشغّل التطبيق", "Who runs the app"),
   pOp:      T("[שם המפעיל ודרך יצירת קשר — להשלמה]. האפליקציה היא כלי עזר לא רשמי. היא אינה שירות של האוניברסיטה העברית או של בית הספר לעבודה סוציאלית ולרווחה חברתית, ואינה מייצגת אותם. לעזרה אפשר תמיד לפנות למזכירות בית הספר.", "[اسم الجهة المشغّلة ووسيلة التواصل — للإكمال]. التطبيق أداة مساعدة غير رسمية. ليس خدمة للجامعة العبرية أو لمدرسة العمل الاجتماعي والرفاه الاجتماعي، ولا يمثّلهما. للمساعدة يمكن دائمًا التوجه إلى سكرتارية المدرسة.", "[Operator name and contact — to be completed]. The app is an unofficial helper tool. It is not a service of, and does not represent, the Hebrew University or the School of Social Work and Social Welfare. For help, you can always contact the school office."),
   pBack:    T("חזרה", "رجوع", "Back"),
+  dispBtn:  T("תצוגה", "العرض", "Display"),
+  dispTitle:T("תצוגה ונגישות", "العرض وإمكانية الوصول", "Display and accessibility"),
+  fsLabel:  T("גודל טקסט", "حجم النص", "Text size"),
+  contrast: T("ניגודיות גבוהה", "تباين عالٍ", "High contrast"),
+  autoRead: T("הקראה אוטומטית של כל צעד", "قراءة كل خطوة تلقائيًا", "Read each step aloud automatically"),
+  speak:    T("הקראת הצעד", "قراءة الخطوة", "Read this step aloud"),
+  stopSpeak:T("עצירת ההקראה", "إيقاف القراءة", "Stop reading"),
+  noSpeech: T("הדפדפן הזה לא תומך בהקראה. אפשר להשתמש בקורא המסך של הטלפון.", "هذا المتصفح لا يدعم القراءة. يمكن استخدام قارئ الشاشة في الهاتف.", "This browser doesn't support reading aloud. You can use your phone's screen reader."),
+  accStmt:  T("הצהרת נגישות", "بيان إمكانية الوصول", "Accessibility statement"),
+  aTitle:   T("הצהרת נגישות", "بيان إمكانية الوصول", "Accessibility statement"),
+  aDate:    T("עודכנה באוקטובר 2026", "حُدّث في أكتوبر 2026", "Updated October 2026"),
+  aDoneH:   T("מה הונגש", "ما الذي تمت إتاحته", "What has been made accessible"),
+  aDone:    T("לכל תמונה במסלול יש הוראה כתובה, כך שקוראי מסך מקריאים את המסלול כולו. אפשר להפעיל את כל הכפתורים גם במקלדת, והאפליקציה מתאימה את עצמה להגדלת התצוגה ולמצב כהה בטלפון. יש מסלול נגיש בלי מדרגות לכל החדרים.", "لكل صورة في المسار تعليمات مكتوبة، فتقرأ قارئات الشاشة المسار كله. يمكن تشغيل جميع الأزرار بلوحة المفاتيح، والتطبيق يتكيف مع تكبير العرض والوضع الداكن في الهاتف. يوجد مسار متاح بدون درج لجميع الغرف.", "Every photo in a route has written directions, so screen readers read the whole route. All buttons work with a keyboard, and the app adapts to the phone's zoom and dark mode. Every room has a step-free route."),
+  aToolsH:  T("כלי תצוגה", "أدوات العرض", "Display tools"),
+  aTools:   T("בכפתור \"תצוגה\" בראש המסך אפשר להגדיל את הטקסט, להפעיל ניגודיות גבוהה ולהפעיל הקראה של צעדי המסלול. ההקראה משתמשת בקול של הטלפון.", "في زر \"العرض\" أعلى الشاشة يمكن تكبير النص، وتفعيل التباين العالي، وتفعيل قراءة خطوات المسار. تستخدم القراءة صوت الهاتف.", "The \"Display\" button at the top lets you enlarge text, turn on high contrast and have route steps read aloud. Reading aloud uses your phone's voice."),
+  aLimitH:  T("מגבלות ידועות", "قيود معروفة", "Known limitations"),
+  aLimit:   T("ההכוונה מבוססת על תמונות, ולכן היא שימושית פחות לאנשים עיוורים. ההוראות הכתובות וההקראה נועדו לעזור, אבל לא מחליפות ליווי. איכות ההקראה בעברית ובערבית תלויה בקולות שמותקנים בטלפון. כאמור, זהו כלי עזר לא רשמי, ותמיד אפשר לפנות לעזרה במזכירות בית הספר.", "الإرشاد مبني على الصور، لذا فهو أقل فائدة للمكفوفين. التعليمات المكتوبة والقراءة تساعد لكنها لا تغني عن المرافقة. جودة القراءة بالعبرية والعربية تعتمد على الأصوات المثبتة في الهاتف. وكما ذُكر، هذه أداة مساعدة غير رسمية، ويمكن دائمًا التوجه لطلب المساعدة من سكرتارية المدرسة.", "Directions are photo-based, so they are less useful for blind users. Written directions and reading aloud help but don't replace someone accompanying you. Reading quality in Hebrew and Arabic depends on the voices installed on your phone. As noted, this is an unofficial helper tool, and you can always ask for help at the school office."),
+  aContactH:T("נתקלתם בבעיית נגישות?", "واجهتم مشكلة في إمكانية الوصول؟", "Found an accessibility problem?"),
+  aContact: T("דווחו לנו דרך הקישור \"מצאתם טעות? דווחו לנו\" בתחתית המסך, ובחרו \"בעיית נגישות\". נשתדל לתקן מהר.", "أخبرونا عبر رابط \"وجدتم خطأً؟ أخبرونا\" أسفل الشاشة. سنحاول الإصلاح بسرعة.", "Tell us using the \"Found a mistake? Tell us\" link at the bottom of the screen. We'll try to fix it quickly."),
   noPhoto:  T("תמונה לצעד הזה תתווסף בקרוב", "ستُضاف صورة لهذه الخطوة قريبًا", "A photo for this step is coming soon"),
   rateQ:    T("המסלול עזר לך?", "هل ساعدك المسار؟", "Did this route help you?"),
   rateUp:   T("אהבתי", "أعجبني", "Liked it"),
@@ -561,8 +638,8 @@ function applyA11y(){
   if (!$("viewRoom").hidden && current) { stepIdx = 0; renderRoom(); }
 }
 
-function show(v){ for (const id of ["viewHome","viewRoom","viewPrivacy"]) $(id).hidden = id !== v; window.scrollTo(0,0); }
-function currentView(){ return ["viewHome","viewRoom","viewPrivacy"].find(id => !$(id).hidden) || "viewHome"; }
+function show(v){ for (const id of ["viewHome","viewRoom","viewPrivacy","viewAccess"]) $(id).hidden = id !== v; window.scrollTo(0,0); }
+function currentView(){ return ["viewHome","viewRoom","viewPrivacy","viewAccess"].find(id => !$(id).hidden) || "viewHome"; }
 
 function applyLang(){
   const app = $("app"), dir = lang === "en" ? "ltr" : "rtl";
@@ -634,7 +711,7 @@ function renderList(){
   $("emptyMsg").hidden = total > 0;
 }
 $("q").addEventListener("input", renderList);
-$("back").onclick = $("back2").onclick = () => { current = null; show("viewHome"); };
+$("back").onclick = $("back2").onclick = () => { stopSpeak(); current = null; show("viewHome"); };
 
 function openRoom(r){ current = r; stepIdx = 0; renderRoom(); show("viewRoom"); }
 function renderRoom(){
@@ -669,6 +746,7 @@ function renderStepper(){
   $("stText").textContent = tr(s.text);
   $("stPrev").disabled = stepIdx === 0; $("stPrev").style.visibility = stepIdx === 0 ? "hidden" : "visible";
   $("stNext").textContent = tr(last ? UI.restart : UI.next);
+  stopSpeak(); if (prefs.autoRead) speakStep();
   if (!last && st[stepIdx + 1].img) { const im = new Image(); im.src = st[stepIdx + 1].img; }
 }
 $("stPrev").onclick = () => { if (stepIdx > 0) { stepIdx--; renderStepper(); } };
@@ -716,6 +794,43 @@ $("copyMail").onclick = () => {
   const done = ok => msg($("copyMsg"), tr(ok ? UI.copied : UI.copyFail), ok ? "ok" : "err");
   try { navigator.clipboard.writeText(REPORT_TO).then(() => done(true), () => done(false)); } catch(e) { done(false); }
 };
+
+/* ===== תצוגה ונגישות ===== */
+const prefs = { fs: 1, contrast: false, autoRead: false };
+try { Object.assign(prefs, JSON.parse(localStorage.getItem("mzp-display") || "{}")); } catch(e) {}
+const savePrefs = () => { try { localStorage.setItem("mzp-display", JSON.stringify(prefs)); } catch(e) {} };
+const canSpeak = "speechSynthesis" in window && "SpeechSynthesisUtterance" in window;
+function applyDisplay(){
+  document.documentElement.style.fontSize = ["100%","118%","136%"][prefs.fs - 1] || "100%";
+  if (prefs.contrast) document.documentElement.setAttribute("data-contrast","high"); else document.documentElement.removeAttribute("data-contrast");
+  document.querySelectorAll("[data-fs]").forEach(b => b.setAttribute("aria-pressed", String(+b.dataset.fs === prefs.fs)));
+  $("contrastBtn").setAttribute("aria-pressed", String(prefs.contrast));
+  $("autoReadBtn").setAttribute("aria-pressed", String(prefs.autoRead));
+  $("autoReadBtn").hidden = !canSpeak; $("noSpeech").hidden = canSpeak; $("speakBtn").hidden = !canSpeak;
+}
+document.querySelectorAll("[data-fs]").forEach(b => b.onclick = () => { prefs.fs = +b.dataset.fs; savePrefs(); applyDisplay(); });
+$("contrastBtn").onclick = () => { prefs.contrast = !prefs.contrast; savePrefs(); applyDisplay(); };
+$("autoReadBtn").onclick = () => { prefs.autoRead = !prefs.autoRead; savePrefs(); applyDisplay(); if (!prefs.autoRead) stopSpeak(); };
+$("dispBtn").onclick = () => { const open = $("dispPanel").hidden; $("dispPanel").hidden = !open; $("dispBtn").setAttribute("aria-expanded", String(open)); };
+const VOICE_LANG = { he: "he-IL", ar: "ar-SA", en: "en-US" };
+let speaking = false;
+function stopSpeak(){ if (canSpeak) speechSynthesis.cancel(); speaking = false; $("speakBtn").querySelector("span").textContent = tr(UI.speak); }
+function speakStep(){
+  if (!canSpeak || !current) return;
+  const rt = activeRoute(current); if (!rt) return;
+  const u = new SpeechSynthesisUtterance(tr(rt.steps[stepIdx].text));
+  u.lang = VOICE_LANG[lang];
+  const v = speechSynthesis.getVoices().find(v => v.lang && v.lang.toLowerCase().startsWith(lang));
+  if (v) u.voice = v;
+  u.onend = u.onerror = () => { speaking = false; $("speakBtn").querySelector("span").textContent = tr(UI.speak); };
+  speechSynthesis.cancel(); speechSynthesis.speak(u);
+  speaking = true; $("speakBtn").querySelector("span").textContent = tr(UI.stopSpeak);
+}
+$("speakBtn").onclick = () => speaking ? stopSpeak() : speakStep();
+const openAccess = () => { lastView = currentView(); stopSpeak(); show("viewAccess"); };
+$("toAccess").onclick = $("toAccess2").onclick = openAccess;
+$("accBack").onclick = () => { if (lastView === "viewRoom" && current) openRoom(current); else show("viewHome"); };
+applyDisplay();
 
 applyLang();
 show("viewHome");
