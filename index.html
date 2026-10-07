@@ -337,7 +337,7 @@ const DATA = {
       tip:T("בגלל השיפוץ אין כרגע כניסה דרך הספרייה. נכנסים מהדלת החיצונית, כמו בתמונות.","بسبب أعمال الترميم لا يوجد حاليًا دخول عبر المكتبة. ادخلوا من الباب الخارجي، كما في الصور.","Because of renovations, there is currently no entry through the library. Use the outside door, as shown in the photos.")},
     {plate:"24-301", floor:"3", area:"soc4"}, {plate:"24-302", floor:"3", area:"soc4"},
     {plate:"42505", floor:"5", area:"hum42"}, {plate:"42506", floor:"5", area:"hum42"},
-    {plate:"200", bldg:"67", floor:"2", photo:"img/buber/8_d200.jpg", area:"buber", label:T("בובר 200","بوبر 200","Buber 200")}
+    {plate:"200", accTip:T("המסלול הנגיש ארוך יחסית ועובר בחניון. הולכים בצד ובזהירות. מתאים גם לאולם בובר 202.","المسار المتاح طويل نسبيًا ويمر عبر موقف سيارات. امشوا على الجانب وبحذر. يناسب أيضًا قاعة بوبر 202.","The step-free route is fairly long and goes through a parking garage. Keep to the side and take care. It also works for Buber Hall 202."), bldg:"67", floor:"2", photo:"img/buber/8_d200.jpg", area:"buber", label:T("בובר 200","بوبر 200","Buber 200")}
   ]
 };
 
@@ -513,9 +513,27 @@ ACC_EXTRA["283"] = {from:FROM.sw, steps:[...common, STEP.junction, STEP.corr, ST
   S("img/acc283/doors.jpg", "בקומה 2 עוברים בדלתות הפתוחות עם השלט \"אולמות הרצאה קפטריה\".", "في الطابق 2 مرّوا عبر الأبواب المفتوحة التي عليها لافتة \"قاعات المحاضرات، الكافتيريا\".", "On Floor 2, go through the open doors with the sign \"Lecture halls, Cafeteria\"."),
   S("img/acc283/hall.jpg", "מגיעים לרחבה הגדולה. בקיר שמולכם הפתח עם השלט האדום \"53 · 283–284\".", "تصلون إلى الساحة الكبيرة. في الجدار المقابل المدخل ذو اللافتة الحمراء \"53 · 283–284\".", "Reach the large open area. In the wall ahead is the opening with the red sign \"53 · 283–284\"."),
   A("img/r283/6.jpg","אולם 283 לפניך.","القاعة 283 أمامكم.","Hall 283 is in front of you.")]};
-ACC_EXTRA["200"] = {from:FROM.sw, steps:ROUTES["200"].steps.map(st => st.img === "img/buber/4_stairs67.jpg"
-  ? S("img/buber/4_stairs67.jpg", "ליד המספר 67 על הקיר עולים ברמפה עם המעקה, מימין למדרגות.", "بجانب الرقم 67 على الجدار اصعدوا المنحدر ذا الدرابزين، على يمين الدرج.", "By the number 67 on the wall, go up the ramp with the handrail, to the right of the stairs.")
-  : st)};
+/* בובר 200 נגיש: דרך בניין 12, הפורום, בניין הסינט והחניון לבית הלל ולמעלית */
+const IMG = n => `img/accb/${n}.jpg`;
+ACC_EXTRA["200"] = {from:FROM.sw, steps:[STEP.lobby,
+  S(IMG("01_exit"), "יוצאים החוצה לגינה בדלתות הזכוכית האוטומטיות.", "اخرجوا إلى الحديقة عبر الأبواب الزجاجية الأوتوماتيكية.", "Go out to the garden through the automatic glass doors."),
+  S(IMG("02_garden"), "בגינה הולכים בשביל לכיוון בניין 12 (השלט הסגול). עוקפים את המדרגות דרך הרמפה עם המעקות.", "في الحديقة امشوا على الممر باتجاه مبنى 12 (اللافتة البنفسجية). تجنّبوا الدرج عبر المنحدر ذي الدرابزين.", "In the garden, follow the path toward Building 12 (purple sign). Avoid the steps by using the ramp with handrails."),
+  S(IMG("03_b12"), "נכנסים לבניין 12 בדלתות הזכוכית.", "ادخلوا مبنى 12 عبر الأبواب الزجاجية.", "Enter Building 12 through the glass doors."),
+  S(IMG("04_law"), "ממשיכים ישר במסדרון הארוך של הפקולטה למשפטים.", "استمروا مباشرة في الممر الطويل لكلية الحقوق.", "Keep straight along the long Faculty of Law corridor."),
+  S(IMG("05_corr"), "ממשיכים עד סוף המסדרון.", "استمروا حتى نهاية الممر.", "Continue to the end of the corridor."),
+  S(IMG("06_ramp"), "בפורום יורדים ברמפה עם המעקות, מימין למדרגות.", "في الفوروم انزلوا المنحدر ذا الدرابزين، على يمين الدرج.", "In the Forum, go down the ramp with handrails, to the right of the stairs."),
+  S(IMG("07_doors"), "יוצאים מהבניין בדלתות הזכוכית הגדולות (שלט \"יציאה\").", "اخرجوا من المبنى عبر الأبواب الزجاجية الكبيرة (لافتة \"خروج\").", "Leave the building through the large glass doors (\"Exit\" sign)."),
+  S(IMG("08_senate"), "בחוץ ממשיכים ישר לאורך קיר האבן של בניין הסינט.", "في الخارج استمروا مباشرة بمحاذاة الجدار الحجري لمبنى السينات.", "Outside, keep straight along the stone wall of the Senate Building."),
+  S(IMG("09_road"), "הולכים על המדרכה לאורך הכביש, לכיוון הכניסה לחניון.", "امشوا على الرصيف بمحاذاة الشارع باتجاه مدخل موقف السيارات.", "Walk on the sidewalk along the road toward the parking garage entrance."),
+  S(IMG("10_park"), "⚠️ נכנסים לחניון. נוסעות כאן מכוניות: הולכים בצד ובזהירות.", "⚠️ ادخلوا موقف السيارات. تمر هنا سيارات: امشوا على الجانب وبحذر.", "⚠️ Enter the parking garage. Cars drive here: keep to the side and take care."),
+  S(IMG("11_down"), "⚠️ יורדים בזהירות ברמפה של החניון, צמוד לשפה.", "⚠️ انزلوا بحذر منحدر الموقف، بمحاذاة الحافة.", "⚠️ Carefully go down the garage ramp, close to the curb."),
+  S(IMG("12_hillel"), "בקומה התחתונה הולכים לפי הכיתוב האדום \"בית הלל ←\", ליד חניות הנכים.", "في الطابق السفلي اتبعوا الكتابة الحمراء \"بيت هليل ←\"، بجانب مواقف ذوي الإعاقة.", "On the lower level, follow the red writing \"Beit Hillel ←\", next to the accessible parking spaces."),
+  S(IMG("13_blue"), "נכנסים בדלת הכחולה הכפולה.", "ادخلوا من الباب الأزرق المزدوج.", "Go in through the blue double door."),
+  S(IMG("14_inside"), "עוברים דרך האולם עם הספות, ויוצאים בדלתות הזכוכית שבצד השני.", "مرّوا عبر القاعة ذات الأرائك، واخرجوا من الأبواب الزجاجية في الجهة الأخرى.", "Cross the room with the sofas and go out through the glass doors on the other side."),
+  S(IMG("15_balcony"), "ממשיכים במסדרון עם הכיסאות הצבעוניים עד המעלית שבסופו.", "استمروا في الممر ذي الكراسي الملونة حتى المصعد في نهايته.", "Continue along the corridor with the colorful chairs to the elevator at the end."),
+  S(IMG("16_lift"), "במעלית (מדבקה 18) יורדים לקומה 2. לפי השלט, שם נמצאים אולמות 200 ו-202.", "في المصعد (ملصق 18) انزلوا إلى الطابق 2. حسب اللافتة، هناك القاعتان 200 و202.", "In the elevator (sticker 18), go down to Floor 2. The sign shows Halls 200 and 202 there."),
+  S(IMG("17_f2"), "בקומה 2 מחפשים את השלט של אולם 200.", "في الطابق 2 ابحثوا عن لافتة القاعة 200.", "On Floor 2, look for the Hall 200 sign."),
+  A("img/buber/8_d200.jpg", "אולם 200.", "القاعة 200.", "Hall 200.")]};
 for (const r of DATA.rooms) {
   if (ACCESSIBLE.includes(r.plate) && r.route) { r.accRoute = r.route; r.accOk = ACC_CONFIRMED.includes(r.plate); }
   if (LIFT_HINT.includes(r.plate)) r.accHint = true;
@@ -621,7 +639,7 @@ function renderRoom(){
   if (r.bldg) where.push(tr(UI.bldg(r.bldg)));
   if (r.floor) where.push(tr(UI.floor(r.floor))); else if (a.note) where.push(tr(a.note));
   $("rWhere").textContent = where.join(" · ");
-  const tip = (a11y && r.tip === STAIRS_TIP) ? null : r.tip;
+  const tip = (a11y && r.accTip) ? r.accTip : (a11y && r.tip === STAIRS_TIP) ? null : r.tip;
   $("rTip").hidden = !tip; $("rTip").textContent = tip ? tr(tip) : "";
   $("rFig").hidden = !r.photo;
   if (r.photo) { $("rImg").src = r.photo; $("rImg").alt = tr(UI.doorAlt(titleOf(r).he ? titleOf(r) : T(titleOf(r),titleOf(r),titleOf(r)))); }
