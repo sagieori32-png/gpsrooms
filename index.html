@@ -479,7 +479,7 @@ for (const r of DATA.rooms) {
 const ACCESSIBLE = ["420","422","428","520","528","600","602","603","359","365","399","24-301","24-302"];
 /* אושרו בשטח */
 const ACC_CONFIRMED = ["520","528","600","602","603","359","365","399","24-301","24-302"];
-const LIFT_HINT  = ["283"];
+const LIFT_HINT  = [];
 /* מסלול נגיש לקומה 2 (220, 224): מעליות 52–53 → בית הספר לריפוי בעיסוק → מסדרון עו״ס */
 const ACC_F2 = [
   S("img/acc2/lifts.jpg", "מגיעים למעליות של בניינים 52–53 בקומה 3.", "تصلون إلى مصاعد المبنيين 52–53 في الطابق 3.", "Reach the Building 52–53 elevators on Floor 3."),
@@ -507,6 +507,12 @@ const ACC_42 = [STEP.lobby, R42[1], R42[2], R42[3],
 ACC_EXTRA["42505"] = {from:FROM.sw, steps:[...ACC_42, A("img/b2/h_12_505.jpg","חדר הסמינרים 42505.","غرفة السيمينار 42505.","Seminar room 42505.")]};
 ACC_EXTRA["42506"] = {from:FROM.sw, steps:[...ACC_42, A("img/b2/h_13_506.jpg","חדר הסמינרים 42506.","غرفة السيمينار 42506.","Seminar room 42506.")]};
 /* בובר 200: אותו מסלול, עם הרמפה במקום המדרגות ליד בניין 67 */
+/* 283 נגיש: כמו לאולם 365, ואז המעלית שמאחורי אולם 365 לקומה 2 */
+ACC_EXTRA["283"] = {from:FROM.sw, steps:[...common, STEP.junction, STEP.corr, STEP.tolib,
+  S("img/acc283/lift42.jpg", "מאחורי אולם 365 נמצאת המעלית (מדבקה צהובה 42). יורדים בה לקומה 2.", "خلف القاعة 365 يوجد المصعد (ملصق أصفر 42). انزلوا به إلى الطابق 2.", "Behind Hall 365 is the elevator (yellow sticker 42). Take it down to Floor 2."),
+  S("img/acc283/doors.jpg", "בקומה 2 עוברים בדלתות הפתוחות עם השלט \"אולמות הרצאה קפטריה\".", "في الطابق 2 مرّوا عبر الأبواب المفتوحة التي عليها لافتة \"قاعات المحاضرات، الكافتيريا\".", "On Floor 2, go through the open doors with the sign \"Lecture halls, Cafeteria\"."),
+  S("img/acc283/hall.jpg", "מגיעים לרחבה הגדולה. בקיר שמולכם הפתח עם השלט האדום \"53 · 283–284\".", "تصلون إلى الساحة الكبيرة. في الجدار المقابل المدخل ذو اللافتة الحمراء \"53 · 283–284\".", "Reach the large open area. In the wall ahead is the opening with the red sign \"53 · 283–284\"."),
+  A("img/r283/6.jpg","אולם 283 לפניך.","القاعة 283 أمامكم.","Hall 283 is in front of you.")]};
 ACC_EXTRA["200"] = {from:FROM.sw, steps:ROUTES["200"].steps.map(st => st.img === "img/buber/4_stairs67.jpg"
   ? S("img/buber/4_stairs67.jpg", "ליד המספר 67 על הקיר עולים ברמפה עם המעקה, מימין למדרגות.", "بجانب الرقم 67 على الجدار اصعدوا المنحدر ذا الدرابزين، على يمين الدرج.", "By the number 67 on the wall, go up the ramp with the handrail, to the right of the stairs.")
   : st)};
