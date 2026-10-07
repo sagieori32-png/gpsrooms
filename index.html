@@ -251,6 +251,7 @@ html:root[data-contrast="high"] .toggle[aria-pressed="true"] .sw{background:#ffd
           <button type="button" class="btn btn-ghost speak" id="speakBtn">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>
             <span data-t="speak"></span></button>
+          <p class="small muted" id="noVoice" hidden></p>
           <div class="row">
             <button class="btn btn-ghost" id="stPrev" type="button" data-t="prev"></button>
             <button class="btn btn-primary" id="stNext" type="button"></button>
@@ -357,6 +358,7 @@ const UI = {
   autoRead: T("הקראה אוטומטית של כל צעד", "قراءة كل خطوة تلقائيًا", "Read each step aloud automatically"),
   speak:    T("הקראת הצעד", "قراءة الخطوة", "Read this step aloud"),
   stopSpeak:T("עצירת ההקראה", "إيقاف القراءة", "Stop reading"),
+  noVoice:  T("ההקראה לא זמינה בעברית במכשיר הזה. אפשר להשתמש בקורא המסך של הטלפון (VoiceOver או TalkBack).", "القراءة الصوتية غير متاحة بالعربية على هذا الجهاز. يمكن استخدام قارئ الشاشة في الهاتف (VoiceOver أو TalkBack).", "Reading aloud isn't available in English on this device. You can use your phone's screen reader (VoiceOver or TalkBack)."),
   noSpeech: T("הדפדפן הזה לא תומך בהקראה. אפשר להשתמש בקורא המסך של הטלפון.", "هذا المتصفح لا يدعم القراءة. يمكن استخدام قارئ الشاشة في الهاتف.", "This browser doesn't support reading aloud. You can use your phone's screen reader."),
   accStmt:  T("הצהרת נגישות", "بيان إمكانية الوصول", "Accessibility statement"),
   aTitle:   T("הצהרת נגישות", "بيان إمكانية الوصول", "Accessibility statement"),
@@ -366,7 +368,7 @@ const UI = {
   aToolsH:  T("כלי תצוגה", "أدوات العرض", "Display tools"),
   aTools:   T("בכפתור \"תצוגה\" בראש המסך אפשר להגדיל את הטקסט, להפעיל ניגודיות גבוהה ולהפעיל הקראה של צעדי המסלול. ההקראה משתמשת בקול של הטלפון.", "في زر \"العرض\" أعلى الشاشة يمكن تكبير النص، وتفعيل التباين العالي، وتفعيل قراءة خطوات المسار. تستخدم القراءة صوت الهاتف.", "The \"Display\" button at the top lets you enlarge text, turn on high contrast and have route steps read aloud. Reading aloud uses your phone's voice."),
   aLimitH:  T("מגבלות ידועות", "قيود معروفة", "Known limitations"),
-  aLimit:   T("ההכוונה מבוססת על תמונות, ולכן היא שימושית פחות לאנשים עיוורים. ההוראות הכתובות וההקראה נועדו לעזור, אבל לא מחליפות ליווי. איכות ההקראה בעברית ובערבית תלויה בקולות שמותקנים בטלפון. כאמור, זהו כלי עזר לא רשמי, ותמיד אפשר לפנות לעזרה במזכירות בית הספר.", "الإرشاد مبني على الصور، لذا فهو أقل فائدة للمكفوفين. التعليمات المكتوبة والقراءة تساعد لكنها لا تغني عن المرافقة. جودة القراءة بالعبرية والعربية تعتمد على الأصوات المثبتة في الهاتف. وكما ذُكر، هذه أداة مساعدة غير رسمية، ويمكن دائمًا التوجه لطلب المساعدة من سكرتارية الكلية.", "Directions are photo-based, so they are less useful for blind users. Written directions and reading aloud help but don't replace someone accompanying you. Reading quality in Hebrew and Arabic depends on the voices installed on your phone. As noted, this is an unofficial helper tool, and you can always ask for help at the school office."),
+  aLimit:   T("ההכוונה מבוססת על תמונות, ולכן היא שימושית פחות לאנשים עיוורים. ההוראות הכתובות וההקראה נועדו לעזור, אבל לא מחליפות ליווי. ההקראה תלויה בקולות שמותקנים בטלפון. בחלק מהמכשירים אין קול בערבית, ואז כפתור ההקראה לא מוצג ומופיעה הפניה לקורא המסך. כאמור, זהו כלי עזר לא רשמי, ותמיד אפשר לפנות לעזרה במזכירות בית הספר.", "الإرشاد مبني على الصور، لذا فهو أقل فائدة للمكفوفين. التعليمات المكتوبة والقراءة تساعد لكنها لا تغني عن المرافقة. تعتمد القراءة على الأصوات المثبتة في الهاتف. في بعض الأجهزة لا يوجد صوت عربي، وعندها لا يظهر زر القراءة ويظهر توجيه إلى قارئ الشاشة. وكما ذُكر، هذه أداة مساعدة غير رسمية، ويمكن دائمًا التوجه لطلب المساعدة من سكرتارية الكلية.", "Directions are photo-based, so they are less useful for blind users. Written directions and reading aloud help but don't replace someone accompanying you. Reading aloud depends on the voices installed on your phone. Some devices have no Arabic voice; then the read-aloud button is hidden and you are pointed to the screen reader. As noted, this is an unofficial helper tool, and you can always ask for help at the school office."),
   aContactH:T("נתקלתם בבעיית נגישות?", "واجهتم مشكلة في إمكانية الوصول؟", "Found an accessibility problem?"),
   aContact: T("דווחו לנו דרך הקישור \"מצאתם טעות? דווחו לנו\" בתחתית המסך, ובחרו \"בעיית נגישות\". נשתדל לתקן מהר.", "أخبرونا عبر رابط \"وجدتم خطأً؟ أخبرونا\" أسفل الشاشة. سنحاول الإصلاح بسرعة.", "Tell us using the \"Found a mistake? Tell us\" link at the bottom of the screen. We'll try to fix it quickly."),
   noPhoto:  T("תמונה לצעד הזה תתווסף בקרוב", "ستُضاف صورة لهذه الخطوة قريبًا", "A photo for this step is coming soon"),
@@ -650,7 +652,7 @@ function applyLang(){
   $("q").placeholder = tr(UI.qPh);
   $("chips").setAttribute("aria-label", tr(UI.filter));
   document.querySelectorAll(".lang").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang === lang));
-  buildChips(); applyA11y();
+  buildChips(); applyA11y(); if (typeof applyVoiceState === "function" && typeof prefs !== "undefined") { stopSpeak(); applyVoiceState(); }
 }
 $("a11y").onclick = () => { a11y = !a11y; try { localStorage.setItem("mzp-a11y", a11y ? "1" : "0"); } catch(e) {} applyA11y(); };
 document.querySelectorAll(".lang").forEach(b => b.onclick = () => {
@@ -807,6 +809,7 @@ function applyDisplay(){
   $("contrastBtn").setAttribute("aria-pressed", String(prefs.contrast));
   $("autoReadBtn").setAttribute("aria-pressed", String(prefs.autoRead));
   $("autoReadBtn").hidden = !canSpeak; $("noSpeech").hidden = canSpeak; $("speakBtn").hidden = !canSpeak;
+  applyVoiceState();
 }
 document.querySelectorAll("[data-fs]").forEach(b => b.onclick = () => { prefs.fs = +b.dataset.fs; savePrefs(); applyDisplay(); });
 $("contrastBtn").onclick = () => { prefs.contrast = !prefs.contrast; savePrefs(); applyDisplay(); };
@@ -814,14 +817,29 @@ $("autoReadBtn").onclick = () => { prefs.autoRead = !prefs.autoRead; savePrefs()
 $("dispBtn").onclick = () => { const open = $("dispPanel").hidden; $("dispPanel").hidden = !open; $("dispBtn").setAttribute("aria-expanded", String(open)); };
 const VOICE_LANG = { he: "he-IL", ar: "ar-SA", en: "en-US" };
 let speaking = false;
+let voicesKnown = false;
+function voiceFor(l){ return canSpeak ? speechSynthesis.getVoices().find(v => v.lang && v.lang.toLowerCase().replace("_","-").startsWith(l)) : null; }
+function hasVoice(){ if (!canSpeak) return false; if (!voicesKnown) return true; return !!voiceFor(lang); }
+function applyVoiceState(){
+  const ok = hasVoice();
+  $("speakBtn").hidden = !ok;
+  $("noVoice").hidden = !canSpeak || ok;
+  $("noVoice").textContent = tr(UI.noVoice);
+  $("autoReadBtn").disabled = !ok;
+  $("autoReadBtn").style.opacity = ok ? "" : ".5";
+}
+if (canSpeak) {
+  const check = () => { if (speechSynthesis.getVoices().length) { voicesKnown = true; applyVoiceState(); } };
+  check(); speechSynthesis.addEventListener?.("voiceschanged", check);
+}
 function stopSpeak(){ if (canSpeak) speechSynthesis.cancel(); speaking = false; $("speakBtn").querySelector("span").textContent = tr(UI.speak); }
 function speakStep(){
-  if (!canSpeak || !current) return;
+  if (!canSpeak || !current || !hasVoice()) return;
   const rt = activeRoute(current); if (!rt) return;
   const u = new SpeechSynthesisUtterance(tr(rt.steps[stepIdx].text));
   u.lang = VOICE_LANG[lang];
-  const v = speechSynthesis.getVoices().find(v => v.lang && v.lang.toLowerCase().startsWith(lang));
-  if (v) u.voice = v;
+  const v = voiceFor(lang);
+  if (v) u.voice = v; else if (voicesKnown) { applyVoiceState(); return; }
   u.onend = u.onerror = () => { speaking = false; $("speakBtn").querySelector("span").textContent = tr(UI.speak); };
   speechSynthesis.cancel(); speechSynthesis.speak(u);
   speaking = true; $("speakBtn").querySelector("span").textContent = tr(UI.stopSpeak);
