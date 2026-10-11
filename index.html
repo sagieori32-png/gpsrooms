@@ -407,7 +407,8 @@ const DATA = {
     {id:"lib",   name:T("ספריית עו״ס וחינוך","مكتبة الخدمة الاجتماعية والتربية","Social Work & Education Library")},
     {id:"soc4",  name:T("מדעי החברה, בניין 24","العلوم الاجتماعية، مبنى 24","Social Sciences, Building 24"), note:T("בסוף מדעי החברה","في نهاية العلوم الاجتماعية","At the far end of Social Sciences")},
     {id:"hum42", name:T("מדעי הרוח, בניין 42, גוש 2","العلوم الإنسانية، مبنى 42، كتلة 2","Humanities, Building 42, Block 2"), note:T("גוש 2, קומה 5","كتلة 2، طابق 5","Block 2, Floor 5")},
-    {id:"buber", name:T("בובר","بوبر","Buber")}
+    {id:"buber", name:T("בובר","بوبر","Buber")},
+    {id:"rot", name:T("בית הספר לתלמידים מחו״ל ע״ש רוטברג","مدرسة روتبرغ الدولية","Rothberg International School")}
   ],
   rooms: [
     {plate:"220", floor:"2", bldg:"52", area:"sw"}, {plate:"224", floor:"2", bldg:"52", area:"sw"},
@@ -422,7 +423,9 @@ const DATA = {
       tip:T("בגלל השיפוץ אין כרגע כניסה דרך הספרייה. נכנסים מהדלת החיצונית, כמו בתמונות.","بسبب أعمال الترميم لا يوجد حاليًا دخول عبر المكتبة. ادخلوا من الباب الخارجي، كما في الصور.","Because of renovations, there is currently no entry through the library. Use the outside door, as shown in the photos.")},
     {plate:"24-301", floor:"3", area:"soc4"}, {plate:"24-302", floor:"3", area:"soc4"},
     {plate:"42505", floor:"5", area:"hum42"}, {plate:"42506", floor:"5", area:"hum42"},
-    {plate:"200", accTip:T("המסלול הנגיש ארוך יחסית ועובר בחניון. הולכים בצד ובזהירות. מתאים גם לאולם בובר 202.","المسار المتاح طويل نسبيًا ويمر عبر موقف سيارات. امشوا على الجانب وبحذر. يناسب أيضًا قاعة بوبر 202.","The step-free route is fairly long and goes through a parking garage. Keep to the side and take care. It also works for Buber Hall 202."), bldg:"67", floor:"2", photo:"img/buber/8_d200.jpg", area:"buber", label:T("בובר 200","بوبر 200","Buber 200")}
+    {plate:"200", accTip:T("המסלול הנגיש ארוך יחסית ועובר בחניון. הולכים בצד ובזהירות. מתאים גם לאולם בובר 202.","المسار المتاح طويل نسبيًا ويمر عبر موقف سيارات. امشوا على الجانب وبحذر. يناسب أيضًا قاعة بوبر 202.","The step-free route is fairly long and goes through a parking garage. Keep to the side and take care. It also works for Buber Hall 202."), bldg:"67", floor:"2", photo:"img/buber/8_d200.jpg", area:"buber", label:T("בובר 200","بوبر 200","Buber 200")},
+    {plate:"101", area:"rot", alias:"רוטברג חול rothberg روتبرغ"},
+    {plate:"102", area:"rot", photo:"img/rot/7_doors.jpg", alias:"רוטברג חול rothberg روتبرغ"},
   ]
 };
 
@@ -552,6 +555,17 @@ const ROUTES = {
     S("img/buber/7_lobby.jpg", "בלובי, ליד הספסלים הירוקים ומכונות השתייה, ממשיכים במסדרון. השלט הכחול מראה \"קומה 2 · אולמות 200, 202\".", "في الردهة، بجانب المقاعد الخضراء وآلات المشروبات، استمروا في الممر. اللافتة الزرقاء تشير إلى \"طابق 2 · قاعات 200، 202\".", "In the lobby, by the green benches and drink machines, continue down the corridor. The blue sign shows \"Floor 2 · Halls 200, 202\"."),
     A("img/buber/8_d200.jpg", "אולם 200.", "القاعة 200.", "Hall 200.")]},
 };
+/* רוטברג 101/102: כמו לבובר עד היציאה לגינה */
+const RROT = [STEP.lobby,
+  S("img/accb/01_exit.jpg", "יוצאים החוצה לגינה בדלתות הזכוכית.", "اخرجوا إلى الحديقة عبر الأبواب الزجاجية.", "Go out to the garden through the glass doors."),
+  S("img/rot/1_stairs.jpg", "עולים במדרגות הארוכות בגינה.", "اصعدوا الدرج الطويل في الحديقة.", "Go up the long stairs in the garden."),
+  S("img/rot/2_under.jpg", "עוברים מתחת לגשר ויוצאים לכביש. חוצים במעבר החצייה.", "مرّوا تحت الجسر واخرجوا إلى الشارع. اعبروا عند ممر المشاة.", "Pass under the bridge to the road and cross at the crosswalk."),
+  S("img/rot/3_sign.jpg", "בשלט \"בית הספר לתלמידים מחו״ל ע״ש רוטברג\" ממשיכים לפי החץ ימינה.", "عند لافتة \"مدرسة روتبرغ الدولية\" استمروا حسب السهم إلى اليمين.", "At the \"Rothberg International School\" sign, follow the arrow to the right."),
+  S("img/rot/4_path.jpg", "יורדים בשביל שבין קירות האבן.", "انزلوا في الممر بين الجدران الحجرية.", "Go down the path between the stone walls."),
+  S("img/rot/5_entrance.jpg", "נכנסים בכניסה של בית הספר לתלמידים מחו״ל (השלט הירוק מעל הדלת).", "ادخلوا من مدخل مدرسة روتبرغ الدولية (اللافتة الخضراء فوق الباب).", "Enter through the Rothberg International School entrance (green sign above the door)."),
+  S("img/rot/6_corr.jpg", "ממשיכים ישר במסדרון עם הדלתות האדומות, עד הדלתות האפורות בסופו.", "استمروا مباشرة في الممر ذي الأبواب الحمراء حتى الأبواب الرمادية في نهايته.", "Keep straight along the corridor with red doors, to the grey doors at the end.")];
+ROUTES["102"] = {from:FROM.sw, steps:[...RROT, A("img/rot/7_doors.jpg","כיתה 102, הדלת האדומה משמאל.","الصف 102، الباب الأحمر على اليسار.","Classroom 102, the red door on the left.")]};
+ROUTES["101"] = {from:FROM.sw, steps:[...RROT, A("img/rot/7_doors.jpg","כיתה 101 היא הדלת שאחרי 102, לפני אודיטוריום הנס סולטר.","الصف 101 هو الباب بعد 102، قبل قاعة هانس سولتر.","Classroom 101 is the door after 102, before the Hans Salter Auditorium.")]};
 const STAIRS_TIP = T("אפשר גם במדרגות: דלת הזכוכית עם השלט הירוק \"לקומות 2, 3, 4, 5 · בניין 52\".",
   "يمكن أيضًا استخدام الدرج: الباب الزجاجي الذي عليه اللافتة الخضراء \"إلى الطوابق 2، 3، 4، 5 · مبنى 52\".",
   "You can also take the stairs: the glass door with the green sign \"To floors 2, 3, 4, 5 · Building 52\".");
