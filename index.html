@@ -424,8 +424,8 @@ const DATA = {
     {plate:"24-301", floor:"3", area:"soc4"}, {plate:"24-302", floor:"3", area:"soc4"},
     {plate:"42505", floor:"5", area:"hum42"}, {plate:"42506", floor:"5", area:"hum42"},
     {plate:"200", accTip:T("המסלול הנגיש ארוך יחסית ועובר בחניון. הולכים בצד ובזהירות. מתאים גם לאולם בובר 202.","المسار المتاح طويل نسبيًا ويمر عبر موقف سيارات. امشوا على الجانب وبحذر. يناسب أيضًا قاعة بوبر 202.","The step-free route is fairly long and goes through a parking garage. Keep to the side and take care. It also works for Buber Hall 202."), bldg:"67", floor:"2", photo:"img/buber/8_d200.jpg", area:"buber", label:T("בובר 200","بوبر 200","Buber 200")},
-    {plate:"101", area:"rot", alias:"רוטברג חול rothberg روتبرغ"},
-    {plate:"102", area:"rot", photo:"img/rot/7_doors.jpg", alias:"רוטברג חול rothberg روتبرغ"},
+    {plate:"101", accTip:T("המסלול הנגיש ארוך יחסית ועובר בחניון. הולכים בצד ובזהירות.","المسار المتاح طويل نسبيًا ويمر عبر موقف سيارات. امشوا على الجانب وبحذر.","The step-free route is fairly long and goes through a parking garage. Keep to the side and take care."), bldg:"74", area:"rot", alias:"רוטברג חול rothberg روتبرغ"},
+    {plate:"102", accTip:T("המסלול הנגיש ארוך יחסית ועובר בחניון. הולכים בצד ובזהירות.","المسار المتاح طويل نسبيًا ويمر عبر موقف سيارات. امشوا على الجانب وبحذر.","The step-free route is fairly long and goes through a parking garage. Keep to the side and take care."), bldg:"74", area:"rot", photo:"img/rot/7_doors.jpg", alias:"רוטברג חול rothberg روتبرغ"},
   ]
 };
 
@@ -633,6 +633,21 @@ ACC_EXTRA["200"] = {from:FROM.sw, steps:[STEP.lobby,
   S(IMG("16_lift"), "במעלית (מדבקה 18) יורדים לקומה 2. לפי השלט, שם נמצאים אולמות 200 ו-202.", "في المصعد (ملصق 18) انزلوا إلى الطابق 2. حسب اللافتة، هناك القاعتان 200 و202.", "In the elevator (sticker 18), go down to Floor 2. The sign shows Halls 200 and 202 there."),
   S(IMG("17_f2"), "בקומה 2 מחפשים את השלט של אולם 200.", "في الطابق 2 ابحثوا عن لافتة القاعة 200.", "On Floor 2, look for the Hall 200 sign."),
   A("img/buber/8_d200.jpg", "אולם 200.", "القاعة 200.", "Hall 200.")]};
+/* רוטברג 101/102 נגיש: כמו לבובר 200 עד הכביש, ואז דרך החניון לבניין 74 */
+const ROTA = n => `img/rota/${n}.jpg`;
+const ACC_ROT = [...ACC_EXTRA["200"].steps.slice(0, ACC_EXTRA["200"].steps.findIndex(st => st.img === "img/accb/09_road.jpg") + 1),
+  S(ROTA("1_drive"), "⚠️ ממשיכים בדרך הגישה לחניון, צמוד למדרכה. נוסעות כאן מכוניות.", "⚠️ استمروا في طريق الدخول إلى الموقف، بمحاذاة الرصيف. تمر هنا سيارات.", "⚠️ Continue along the garage driveway, close to the curb. Cars drive here."),
+  S(ROTA("2_gate"), "⚠️ נכנסים לחניון בצד ימין, על המדרכה הצרה.", "⚠️ ادخلوا الموقف من الجهة اليمنى، على الرصيف الضيق.", "⚠️ Enter the garage on the right, on the narrow sidewalk."),
+  S(ROTA("3_ramp"), "⚠️ ממשיכים ברמפה של החניון, בצד, לפי השלט לבית הלל ומרכז הסטודנט.", "⚠️ استمروا على منحدر الموقف، على الجانب، حسب اللافتة إلى بيت هليل ومركز الطلاب.", "⚠️ Continue along the garage ramp, at the side, following the sign to Beit Hillel and the Student Center."),
+  S(ROTA("4_level"), "⚠️ בקומת החניה הולכים בזהירות לפי החץ הכחול ימינה.", "⚠️ في طابق الموقف امشوا بحذر حسب السهم الأزرق إلى اليمين.", "⚠️ On the parking level, carefully follow the blue arrow to the right."),
+  S(ROTA("5_door"), "יוצאים מהחניון בדלת השחורה, ליד ציור הקיר.", "اخرجوا من الموقف عبر الباب الأسود بجانب الرسم الجداري.", "Leave the garage through the black door next to the wall mural."),
+  S(ROTA("6_sign"), "ממשיכים לפי השלט \"בית הספר לתלמידים מחו״ל\" ימינה.", "استمروا حسب لافتة \"المدرسة للطلاب الدوليين\" إلى اليمين.", "Follow the \"Rothberg International School\" sign to the right."),
+  S(ROTA("7_corr"), "במעבר המקורה פונים שמאלה לפי השלט, וממשיכים עד הסוף.", "في الممر المسقوف انعطفوا يسارًا حسب اللافتة واستمروا حتى النهاية.", "In the covered walkway, turn left at the sign and continue to the end."),
+  S(ROTA("8_e74"), "נכנסים לבניין 74 בדלתות הירוקות.", "ادخلوا مبنى 74 عبر الأبواب الخضراء.", "Enter Building 74 through the green doors."),
+  S(ROTA("9_lifts"), "במעליות יורדים לקומה 1.", "انزلوا بالمصعد إلى الطابق 1.", "Take the elevator down to Floor 1."),
+  S(ROTA("10_class"), "נכנסים בדלתות האדומות לפי השלט \"כיתות · אודיטוריום\".", "ادخلوا من الأبواب الحمراء حسب لافتة \"صفوف · صالة محاضرات\".", "Go through the red doors at the \"Classrooms · Auditorium\" sign.")];
+ACC_EXTRA["102"] = {from:FROM.sw, steps:[...ACC_ROT, A("img/rot/7_doors.jpg","כיתה 102, הדלת האדומה משמאל.","الصف 102، الباب الأحمر على اليسار.","Classroom 102, the red door on the left.")]};
+ACC_EXTRA["101"] = {from:FROM.sw, steps:[...ACC_ROT, A("img/rot/7_doors.jpg","כיתה 101 היא הדלת שאחרי 102, לפני אודיטוריום הנס סולטר.","الصف 101 هو الباب بعد 102، قبل قاعة هانس سولتر.","Classroom 101 is the door after 102, before the Hans Salter Auditorium.")]};
 for (const r of DATA.rooms) {
   if (ACCESSIBLE.includes(r.plate) && r.route) { r.accRoute = r.route; r.accOk = ACC_CONFIRMED.includes(r.plate); }
   if (LIFT_HINT.includes(r.plate)) r.accHint = true;
