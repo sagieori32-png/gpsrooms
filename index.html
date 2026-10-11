@@ -417,7 +417,7 @@ const DATA = {
     {plate:"365", photo:"img/365.jpg", area:"sw", label:T("אולם חרוב","قاعة حاروف (الخرّوب)","Haruv (Carob) Hall"), alias:"חרוב haruv carob خروب حاروف"},
     {plate:"420", floor:"4", area:"sw"},
     {plate:"422", floor:"4", area:"sw", label:T("חדר ישיבות קטן","غرفة اجتماعات صغيرة","Small meeting room"), alias:"ישיבות meeting اجتماعات"},
-    {plate:"428", floor:"4", area:"sw"}, {plate:"520", floor:"5", area:"sw"}, {plate:"528", floor:"5", area:"sw"},
+    {plate:"428", floor:"4", area:"sw"}, {plate:"468", floor:"4", bldg:"53", photo:"img/r468/door.jpg", area:"sw", label:T("חדר הנקה (זמני)","غرفة إرضاع (مؤقتة)","Nursing room (temporary)"), alias:"הנקה nursing lactation إرضاع חינוך"}, {plate:"520", floor:"5", area:"sw"}, {plate:"528", floor:"5", area:"sw"},
     {plate:"600", floor:"6", area:"sw"}, {plate:"602", floor:"6", area:"sw"}, {plate:"603", floor:"6", photo:"img/b52/d603.jpg", area:"sw"},
     {plate:"399", bldg:"52", photo:"img/399.jpg", area:"lib", label:T("ספריית עו״ס וחינוך","مكتبة الخدمة الاجتماعية والتربية","Social Work & Education Library"), alias:"ספרייה ספריה library مكتبة",
       tip:T("בגלל השיפוץ אין כרגע כניסה דרך הספרייה. נכנסים מהדלת החיצונית, כמו בתמונות.","بسبب أعمال الترميم لا يوجد حاليًا دخول عبر المكتبة. ادخلوا من الباب الخارجي، كما في الصور.","Because of renovations, there is currently no entry through the library. Use the outside door, as shown in the photos.")},
@@ -535,6 +535,9 @@ const ROUTES = {
   "224": {from:FROM.sw, steps:[STEP.lobby, STEP.down, STEP.corr220, A("img/b52/d224.jpg","הדלת האדומה עם השלט 224, צמודה לחדר 223.","الباب الأحمر الذي عليه لافتة 224، بجانب الغرفة 223.","The red door with the 224 sign, next to room 223.")]},
   "420": {from:FROM.lifts, steps:viaLift(4, STEP.f4, A("img/b52/d420.jpg","חדר 420 משמאל (ליד הכיסאות הכחולים).","الغرفة 420 على اليسار (بجانب الكراسي الزرقاء).","Room 420 is on the left, by the blue chairs."))},
   "422": {from:FROM.lifts, steps:viaLift(4, STEP.f4, A("img/b52/d420.jpg","חדר הישיבות 422 מימין, ליד 420.","غرفة الاجتماعات 422 على اليمين، بجانب 420.","Meeting room 422 is on the right, next to 420."))},
+  "468": {from:FROM.lifts, steps:viaLift(4,
+    S("img/r468/wing.jpg", "בקומה 4 נכנסים לאגף ע״ש רחל חיה לרמן, עם השלט \"53 · חדרים 443–479\", וממשיכים במסדרון.", "في الطابق 4 ادخلوا جناح ليرمان، مع اللافتة \"53 · غرف 443–479\"، واستمروا في الممر.", "On Floor 4, enter the Lehrman Wing with the sign \"53 · Rooms 443–479\" and continue down the corridor."),
+    A("img/r468/door.jpg", "חדר ההנקה 468 הוא הדלת הלבנה שליד חדר 467.", "غرفة الإرضاع 468 هي الباب الأبيض بجانب الغرفة 467.", "Nursing room 468 is the white door next to room 467."))},
   "428": {from:FROM.lifts, steps:viaLift(4, STEP.f4, A("img/b52/d428.jpg","כיתה 428, הדלת עם המסך לידה.","الغرفة 428، الباب الذي بجانبه شاشة.","Room 428, the door with a screen next to it."))},
   "520": {from:FROM.lifts, steps:viaLift(5, STEP.f5, STEP.f5b, A("img/b52/d520.jpg","כיתה 520.","الغرفة 520.","Room 520."))},
   "528": {from:FROM.lifts, steps:viaLift(5, STEP.f5, STEP.f5b, A("img/b52/d528.jpg","כיתה 528.","الغرفة 528.","Room 528."))},
@@ -575,7 +578,7 @@ for (const r of DATA.rooms) {
   if (rt.from === FROM.lifts) { r.bldg ||= "52"; if (["420","422","428","520","528"].includes(r.plate)) r.tip ||= STAIRS_TIP; }
 }
 /* נגישות: מסלולים בלי מדרגות. מעליות 52–53, ומסלולים שבתמונות שלהם אין מדרגות (לבדיקה בשטח) */
-const ACCESSIBLE = ["420","422","428","520","528","600","602","603","359","365","399","24-301","24-302"];
+const ACCESSIBLE = ["468","420","422","428","520","528","600","602","603","359","365","399","24-301","24-302"];
 /* אושרו בשטח */
 const ACC_CONFIRMED = ["520","528","600","602","603","359","365","399","24-301","24-302"];
 const LIFT_HINT  = [];
