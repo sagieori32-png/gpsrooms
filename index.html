@@ -236,6 +236,11 @@ html:root[data-contrast="high"] .toggle[aria-pressed="true"] .sw{background:#ffd
         </div>
       </div>
       <p class="note" id="rTip" hidden></p>
+      <div class="row" id="rLinks" hidden>
+        <a class="btn btn-primary" id="wazeBtn" target="_blank" rel="noopener" data-t="openWaze"></a>
+        <button class="btn btn-ghost" id="shareBtn" type="button" data-t="copyLink"></button>
+      </div>
+      <p class="fb-msg" id="shareMsg" aria-live="polite" hidden></p>
       <figure class="door" id="rFig" hidden>
         <img id="rImg" alt="">
         <figcaption data-t="doorCap"></figcaption>
@@ -351,6 +356,9 @@ const UI = {
   pOpH:     T("מי מפעיל את האפליקציה", "من يشغّل التطبيق", "Who runs the app"),
   pOp:      T("[שם המפעיל ודרך יצירת קשר — להשלמה]. האפליקציה היא כלי עזר לא רשמי. היא אינה שירות של האוניברסיטה העברית או של בית הספר לעבודה סוציאלית ולרווחה חברתית, ואינה מייצגת אותם. לעזרה אפשר תמיד לפנות למזכירות בית הספר.", "[اسم الجهة المشغّلة ووسيلة التواصل — للإكمال]. التطبيق أداة مساعدة غير رسمية. ليس خدمة للجامعة العبرية أو لكلية الخدمة الاجتماعية والرفاه الاجتماعي، ولا يمثّلهما. للمساعدة يمكن دائمًا التوجه إلى سكرتارية الكلية.", "[Operator name and contact — to be completed]. The app is an unofficial helper tool. It is not a service of, and does not represent, the Hebrew University or the School of Social Work and Social Welfare. For help, you can always contact the school office."),
   pBack:    T("חזרה", "رجوع", "Back"),
+  openWaze: T("פתיחה ב-Waze", "فتح في Waze", "Open in Waze"),
+  copyLink: T("העתקת קישור לעמוד הזה", "نسخ رابط هذه الصفحة", "Copy link to this page"),
+  linkCopied: T("הקישור הועתק.", "تم نسخ الرابط.", "Link copied."),
   dispBtn:  T("תצוגה", "العرض", "Display"),
   dispTitle:T("תצוגה ונגישות", "العرض وإمكانية الوصول", "Display and accessibility"),
   fsLabel:  T("גודל טקסט", "حجم النص", "Text size"),
@@ -408,7 +416,8 @@ const DATA = {
     {id:"soc4",  name:T("מדעי החברה, בניין 24","العلوم الاجتماعية، مبنى 24","Social Sciences, Building 24"), note:T("בסוף מדעי החברה","في نهاية العلوم الاجتماعية","At the far end of Social Sciences")},
     {id:"hum42", name:T("מדעי הרוח, בניין 42, גוש 2","العلوم الإنسانية، مبنى 42، كتلة 2","Humanities, Building 42, Block 2"), note:T("גוש 2, קומה 5","كتلة 2، طابق 5","Block 2, Floor 5")},
     {id:"buber", name:T("בובר","بوبر","Buber")},
-    {id:"rot", name:T("בית הספר לתלמידים מחו״ל ע״ש רוטברג","مدرسة روتبرغ الدولية","Rothberg International School")}
+    {id:"rot", name:T("בית הספר לתלמידים מחו״ל ע״ש רוטברג","مدرسة روتبرغ الدولية","Rothberg International School")},
+    {id:"park", name:T("הגעה ברכב","الوصول بالسيارة","Arriving by car")}
   ],
   rooms: [
     {plate:"220", floor:"2", bldg:"52", area:"sw"}, {plate:"224", floor:"2", bldg:"52", area:"sw"},
@@ -426,6 +435,7 @@ const DATA = {
     {plate:"200", accTip:T("המסלול הנגיש ארוך יחסית ועובר בחניון. הולכים בצד ובזהירות. מתאים גם לאולם בובר 202.","المسار المتاح طويل نسبيًا ويمر عبر موقف سيارات. امشوا على الجانب وبحذر. يناسب أيضًا قاعة بوبر 202.","The step-free route is fairly long and goes through a parking garage. Keep to the side and take care. It also works for Buber Hall 202."), bldg:"67", floor:"2", photo:"img/buber/8_d200.jpg", area:"buber", label:T("בובר 200","بوبر 200","Buber 200")},
     {plate:"101", accTip:T("המסלול הנגיש ארוך יחסית ועובר בחניון. הולכים בצד ובזהירות.","المسار المتاح طويل نسبيًا ويمر عبر موقف سيارات. امشوا على الجانب وبحذر.","The step-free route is fairly long and goes through a parking garage. Keep to the side and take care."), bldg:"74", area:"rot", alias:"רוטברג חול rothberg روتبرغ"},
     {plate:"102", accTip:T("המסלול הנגיש ארוך יחסית ועובר בחניון. הולכים בצד ובזהירות.","المسار المتاح طويل نسبيًا ويمر عبر موقف سيارات. امشوا على الجانب وبحذر.","The step-free route is fairly long and goes through a parking garage. Keep to the side and take care."), bldg:"74", area:"rot", photo:"img/rot/7_doors.jpg", alias:"רוטברג חול rothberg روتبرغ"},
+    {plate:"P4", area:"park", link:"parking", label:T("חניון מדעי הרוח (4) לבית הספר","موقف العلوم الإنسانية (4) إلى الكلية","Humanities Parking (4) to the School"), alias:"חניה חניון רכב parking car waze موقف سيارة", tip:T("ב-Waze מנווטים ל\"חניון מדעי הרוח (4), האוניברסיטה העברית, הר הצופים\". הכניסה לחניון ברכב רק עם אישור כניסה שהתקבל מראש.","في Waze انتقلوا إلى \"موقف العلوم الإنسانية (4)، الجامعة العبرية، جبل المشارف\". الدخول بالسيارة فقط بتصريح دخول مسبق.","In Waze, navigate to \"Humanities Parking (4), Hebrew University, Mount Scopus\". Car entry requires a permit arranged in advance.")}
   ]
 };
 
@@ -569,6 +579,20 @@ const RROT = [STEP.lobby,
   S("img/rot/6_corr.jpg", "ממשיכים ישר במסדרון עם הדלתות האדומות, עד הדלתות האפורות בסופו.", "استمروا مباشرة في الممر ذي الأبواب الحمراء حتى الأبواب الرمادية في نهايته.", "Keep straight along the corridor with red doors, to the grey doors at the end.")];
 ROUTES["102"] = {from:FROM.sw, steps:[...RROT, A("img/rot/7_doors.jpg","כיתה 102, הדלת האדומה משמאל.","الصف 102، الباب الأحمر على اليسار.","Classroom 102, the red door on the left.")]};
 ROUTES["101"] = {from:FROM.sw, steps:[...RROT, A("img/rot/7_doors.jpg","כיתה 101 היא הדלת שאחרי 102, לפני אודיטוריום הנס סולטר.","الصف 101 هو الباب بعد 102، قبل قاعة هانس سولتر.","Classroom 101 is the door after 102, before the Hans Salter Auditorium.")]};
+/* חניון מדעי הרוח (4) → חנייה של בית הספר → מעליות */
+const PK = n => `img/park/${n}.jpg`;
+ROUTES["P4"] = {from:T("הכניסה לחניון מדעי הרוח (4)","مدخل موقف العلوم الإنسانية (4)","the Humanities Parking (4) entrance"), steps:[
+  S(PK("01_entry"), "אחרי הכניסה לחניון ממשיכים לפי השלט \"חניון חינוך\".", "بعد الدخول إلى الموقف استمروا حسب لافتة \"موقف التربية\".", "After entering the garage, follow the \"Education Parking\" sign."),
+  S(PK("02_level1"), "ממשיכים ישר במפלס 1 (העמודים האדומים).", "استمروا مباشرة في المستوى 1 (الأعمدة الحمراء).", "Keep straight on Level 1 (red pillars)."),
+  S(PK("03_level1b"), "ממשיכים ישר לאורך המפלס.", "استمروا مباشرة على طول المستوى.", "Keep straight along the level."),
+  S(PK("04_aisle"), "ממשיכים עד סוף המעבר.", "استمروا حتى نهاية الممر.", "Continue to the end of the aisle."),
+  S(PK("05_sign"), "בשלט הירוק פונים שמאלה ל\"חניון חינוך\" ועולים למפלס 2.", "عند اللافتة الخضراء انعطفوا يسارًا إلى \"موقف التربية\" واصعدوا إلى المستوى 2.", "At the green sign, turn left to \"Education Parking\" and go up to Level 2."),
+  S(PK("06_level2"), "במפלס 2 (העמודים הכחולים) ממשיכים ישר.", "في المستوى 2 (الأعمدة الزرقاء) استمروا مباشرة.", "On Level 2 (blue pillars), keep straight."),
+  S(PK("07_edu"), "ממשיכים לפי השלט \"חניון חינוך\" לכיוון בית הספר לעבודה סוציאלית.", "استمروا حسب لافتة \"موقف التربية\" باتجاه كلية الخدمة الاجتماعية.", "Follow the \"Education Parking\" sign toward the School of Social Work."),
+  S(PK("08_sw"), "בשלט של בית הספר לעבודה סוציאלית (P 52) פונים שמאלה.", "عند لافتة كلية الخدمة الاجتماعية (P 52) انعطفوا يسارًا.", "At the School of Social Work sign (P 52), turn left."),
+  S(PK("09_maiersdorf"), "ליד שלט בית מאירסדורף חונים, והולכים ימינה לדלתות הזכוכית.", "بجانب لافتة بيت مايرسدورف اركنوا، وامشوا يمينًا إلى الأبواب الزجاجية.", "Park near the Maiersdorf sign and walk right to the glass doors."),
+  S(PK("10_entrance"), "נכנסים בכניסה עם העציץ והשלט של בית הספר לעבודה סוציאלית.", "ادخلوا من المدخل ذي النبتة ولافتة كلية الخدمة الاجتماعية.", "Go in at the entrance with the plant and the School of Social Work sign."),
+  A(PK("11_lifts"), "עולים במעלית: לקומה 3 למסדרון בית הספר, או לקומה 4 למשרדי ההנהלה.", "اصعدوا بالمصعد: إلى الطابق 3 لممر الكلية، أو إلى الطابق 4 لمكاتب الإدارة.", "Take the elevator: Floor 3 for the school corridor, or Floor 4 for the administration offices.")]};
 const STAIRS_TIP = T("אפשר גם במדרגות: דלת הזכוכית עם השלט הירוק \"לקומות 2, 3, 4, 5 · בניין 52\".",
   "يمكن أيضًا استخدام الدرج: الباب الزجاجي الذي عليه اللافتة الخضراء \"إلى الطوابق 2، 3، 4، 5 · مبنى 52\".",
   "You can also take the stairs: the glass door with the green sign \"To floors 2, 3, 4, 5 · Building 52\".");
@@ -578,7 +602,7 @@ for (const r of DATA.rooms) {
   if (rt.from === FROM.lifts) { r.bldg ||= "52"; if (["420","422","428","520","528"].includes(r.plate)) r.tip ||= STAIRS_TIP; }
 }
 /* נגישות: מסלולים בלי מדרגות. מעליות 52–53, ומסלולים שבתמונות שלהם אין מדרגות (לבדיקה בשטח) */
-const ACCESSIBLE = ["468","420","422","428","520","528","600","602","603","359","365","399","24-301","24-302"];
+const ACCESSIBLE = ["P4","468","420","422","428","520","528","600","602","603","359","365","399","24-301","24-302"];
 /* אושרו בשטח */
 const ACC_CONFIRMED = ["520","528","600","602","603","359","365","399","24-301","24-302"];
 const LIFT_HINT  = [];
@@ -758,6 +782,8 @@ function renderRoom(){
   $("rWhere").textContent = where.join(" · ");
   const tip = (a11y && r.accTip) ? r.accTip : (a11y && r.tip === STAIRS_TIP) ? null : r.tip;
   $("rTip").hidden = !tip; $("rTip").textContent = tip ? tr(tip) : "";
+  $("rLinks").hidden = !r.link; $("shareMsg").hidden = true;
+  if (r.link) $("wazeBtn").href = "https://waze.com/ul?q=" + encodeURIComponent("חניון מדעי הרוח הר הצופים") + "&navigate=yes";
   $("rFig").hidden = !r.photo;
   if (r.photo) { $("rImg").src = r.photo; $("rImg").alt = tr(UI.doorAlt(titleOf(r).he ? titleOf(r) : T(titleOf(r),titleOf(r),titleOf(r)))); }
   const rt = activeRoute(r);
@@ -882,8 +908,14 @@ $("toAccess").onclick = $("toAccess2").onclick = openAccess;
 $("accBack").onclick = () => { if (lastView === "viewRoom" && current) openRoom(current); else show("viewHome"); };
 applyDisplay();
 
+$("shareBtn").onclick = () => {
+  const url = location.href.split("#")[0] + "#" + current.link;
+  const done = ok => { $("shareMsg").hidden = false; $("shareMsg").className = "fb-msg " + (ok ? "ok" : "err"); $("shareMsg").textContent = ok ? tr(UI.linkCopied) : url; };
+  try { navigator.clipboard.writeText(url).then(() => done(true), () => done(false)); } catch(e) { done(false); }
+};
 applyLang();
 show("viewHome");
+{ const h = (location.hash || "").slice(1); const r = h && DATA.rooms.find(x => x.link === h); if (r) openRoom(r); }
 </script>
 </body>
 </html>
